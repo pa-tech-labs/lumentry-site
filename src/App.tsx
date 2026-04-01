@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
-type Plan = 'pro' | 'enterprise'
+type Plan = 'pro' | 'business' | 'enterprise'
 type ModalStep = 1 | 2 | 3
 
 interface FormData {
@@ -92,23 +92,27 @@ const MARQUEE_ITEMS = [
 
 const PRO_FEATURES = [
   'Online booking portal',
-  'Up to 5 rooms / resources',
-  'Smart lock integration',
+  'Up to 3 rooms / resources',
   'Email & SMS campaigns',
   'Promo codes & discounts',
-  'Multi-hour pricing tiers',
   'Analytics dashboard',
+]
+
+const BUSINESS_FEATURES = [
+  'Everything in Pro',
+  'Up to 10 rooms / resources',
+  'Smart lock integration',
   'Automated access codes',
 ]
 
 const ENTERPRISE_FEATURES = [
-  'Everything in Pro',
+  'Everything in Business',
   'Unlimited rooms & resources',
   'CRM & client management',
   'White label branding',
   'Custom email domain',
-  'SMS campaign blasts',
   'Leaderboard & loyalty',
+  'Automated marketing triggers',
   'Priority support',
 ]
 
@@ -491,11 +495,105 @@ function BookingModes() {
 
 // ── Pricing ───────────────────────────────────────────────────────────────────
 
+const FREE_BADGE = (
+  <span style={{
+    fontSize: '11px', fontWeight: 700, padding: '3px 10px',
+    background: 'rgba(167,139,250,0.15)', border: '1px solid rgba(167,139,250,0.3)',
+    borderRadius: '999px', color: '#a78bfa',
+  }}>1 month free</span>
+)
+
+function PricingCard({
+  plan, price, tagline, features, featured, onTrialClick,
+}: {
+  plan: Plan
+  price: string
+  tagline: string
+  features: string[]
+  featured?: boolean
+  onTrialClick: (plan: Plan) => void
+}) {
+  const label = plan === 'pro' ? 'Pro' : plan === 'business' ? 'Business' : 'Enterprise'
+
+  return (
+    <div style={{
+      background: featured ? '#0d0b14' : '#0f0f0f',
+      border: featured ? '1px solid rgba(167,139,250,0.5)' : '1px solid rgba(255,255,255,0.07)',
+      borderRadius: '20px',
+      padding: featured ? '40px 32px' : '32px 28px',
+      position: 'relative',
+      display: 'flex', flexDirection: 'column',
+      boxShadow: featured ? '0 0 60px rgba(167,139,250,0.1), 0 0 0 1px rgba(167,139,250,0.15)' : 'none',
+      transform: featured ? 'scale(1.03)' : 'scale(1)',
+      zIndex: featured ? 1 : 0,
+      transition: 'box-shadow 0.25s',
+    }}>
+      {/* Gradient top border for Business */}
+      {featured && (
+        <div style={{
+          position: 'absolute', top: 0, left: 0, right: 0, height: '2px',
+          background: 'linear-gradient(90deg, #a78bfa, #ec4899, #f97316)',
+          borderRadius: '20px 20px 0 0',
+        }} />
+      )}
+
+      {/* Most Popular badge */}
+      {featured && (
+        <div style={{
+          position: 'absolute', top: '-14px', left: '50%', transform: 'translateX(-50%)',
+          background: 'linear-gradient(135deg, #a78bfa, #ec4899)',
+          color: '#fff', fontSize: '11px', fontWeight: 800,
+          padding: '4px 16px', borderRadius: '999px',
+          letterSpacing: '0.06em', textTransform: 'uppercase', whiteSpace: 'nowrap',
+          boxShadow: '0 4px 16px rgba(167,139,250,0.4)',
+        }}>
+          Most Popular
+        </div>
+      )}
+
+      <div style={{ marginBottom: '24px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+          <span style={{ fontSize: '13px', fontWeight: 700, color: 'rgba(255,255,255,0.45)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>{label}</span>
+          {FREE_BADGE}
+        </div>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
+          <span style={{
+            fontFamily: "'Bebas Neue', sans-serif",
+            fontSize: featured ? '60px' : '52px',
+            color: '#f5f5f7', lineHeight: 1,
+          }}>{price}</span>
+          <span style={{ fontSize: '15px', color: 'rgba(255,255,255,0.35)' }}>/mo + VAT</span>
+        </div>
+        <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)', margin: '6px 0 0' }}>{tagline}</p>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '32px', flex: 1 }}>
+        {features.map(f => (
+          <div key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+            <CheckIcon />
+            <span style={{ fontSize: '14px', color: featured ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.65)' }}>{f}</span>
+          </div>
+        ))}
+      </div>
+
+      <button
+        onClick={() => onTrialClick(plan)}
+        className={featured ? 'grad-btn' : 'ghost-btn'}
+        style={{ width: '100%', height: featured ? '52px' : '46px', borderRadius: '12px', fontSize: '15px', fontWeight: 600 }}
+      >
+        Start free trial
+      </button>
+    </div>
+  )
+}
+
 function Pricing({ onTrialClick }: { onTrialClick: (plan?: Plan) => void }) {
+  const handleClick = (plan: Plan) => onTrialClick(plan)
+
   return (
     <section id="pricing" style={{ padding: '100px 24px' }}>
-      <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+      <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: '72px' }}>
           <p style={{ fontSize: '13px', fontWeight: 600, color: '#f97316', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '16px' }}>
             Simple pricing
           </p>
@@ -512,89 +610,42 @@ function Pricing({ onTrialClick }: { onTrialClick: (plan?: Plan) => void }) {
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
-          {/* Pro */}
-          <div className="pricing-card">
-            <div style={{ marginBottom: '28px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                <span style={{ fontSize: '13px', fontWeight: 700, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Pro</span>
-                <span style={{
-                  fontSize: '11px', fontWeight: 700, padding: '3px 10px',
-                  background: 'rgba(167,139,250,0.15)', border: '1px solid rgba(167,139,250,0.3)',
-                  borderRadius: '999px', color: '#a78bfa',
-                }}>1 month free</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
-                <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '52px', color: '#f5f5f7', lineHeight: 1 }}>£29</span>
-                <span style={{ fontSize: '15px', color: 'rgba(255,255,255,0.4)' }}>/mo + VAT</span>
-              </div>
-              <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)', margin: '6px 0 0' }}>Perfect for single-venue operators</p>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '32px' }}>
-              {PRO_FEATURES.map(f => (
-                <div key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                  <CheckIcon />
-                  <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)' }}>{f}</span>
-                </div>
-              ))}
-            </div>
-
-            <button
-              onClick={() => onTrialClick('pro')}
-              className="ghost-btn"
-              style={{ width: '100%', height: '48px', borderRadius: '12px', fontSize: '15px', fontWeight: 600 }}
-            >
-              Start free trial
-            </button>
-          </div>
-
-          {/* Enterprise */}
-          <div className="pricing-card featured">
-            {/* Gradient top border */}
-            <div style={{
-              position: 'absolute', top: 0, left: 0, right: 0, height: '2px',
-              background: 'linear-gradient(90deg, #a78bfa, #ec4899, #f97316)',
-              borderRadius: '20px 20px 0 0',
-            }} />
-
-            <div style={{ marginBottom: '28px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                <span style={{ fontSize: '13px', fontWeight: 700, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Enterprise</span>
-                <span style={{
-                  fontSize: '11px', fontWeight: 700, padding: '3px 10px',
-                  background: 'rgba(167,139,250,0.15)', border: '1px solid rgba(167,139,250,0.3)',
-                  borderRadius: '999px', color: '#a78bfa',
-                }}>1 month free</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
-                <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '52px', color: '#f5f5f7', lineHeight: 1 }}>£79</span>
-                <span style={{ fontSize: '15px', color: 'rgba(255,255,255,0.4)' }}>/mo + VAT</span>
-              </div>
-              <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)', margin: '6px 0 0' }}>For growing multi-service venues</p>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '32px' }}>
-              {ENTERPRISE_FEATURES.map(f => (
-                <div key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                  <CheckIcon />
-                  <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)' }}>{f}</span>
-                </div>
-              ))}
-            </div>
-
-            <button
-              onClick={() => onTrialClick('enterprise')}
-              className="grad-btn"
-              style={{ width: '100%', height: '48px', borderRadius: '12px', fontSize: '15px' }}
-            >
-              Start free trial
-            </button>
-          </div>
+        {/* Extra top padding to make room for the "Most Popular" pill that pops above the Business card */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '16px',
+          alignItems: 'center',
+          paddingTop: '18px',
+        }}
+          className="pricing-grid"
+        >
+          <PricingCard
+            plan="pro"
+            price="£29"
+            tagline="Perfect for getting started"
+            features={PRO_FEATURES}
+            onTrialClick={handleClick}
+          />
+          <PricingCard
+            plan="business"
+            price="£50"
+            tagline="For venues that need access control"
+            features={BUSINESS_FEATURES}
+            featured
+            onTrialClick={handleClick}
+          />
+          <PricingCard
+            plan="enterprise"
+            price="£79"
+            tagline="Full power for growing businesses"
+            features={ENTERPRISE_FEATURES}
+            onTrialClick={handleClick}
+          />
         </div>
 
-        <p style={{ textAlign: 'center', fontSize: '13px', color: 'rgba(255,255,255,0.3)', marginTop: '28px' }}>
-          No credit card required to start · Cancel anytime · Prices exclude VAT
+        <p style={{ textAlign: 'center', fontSize: '13px', color: 'rgba(255,255,255,0.3)', marginTop: '36px' }}>
+          No credit card required · Cancel anytime · All prices exclude VAT
         </p>
       </div>
     </section>
@@ -741,7 +792,8 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
   }
 
   const planDetails: Record<Plan, { price: string; features: string[] }> = {
-    pro: { price: '£29/mo', features: PRO_FEATURES.slice(0, 5) },
+    pro:        { price: '£29/mo', features: PRO_FEATURES },
+    business:   { price: '£50/mo', features: BUSINESS_FEATURES },
     enterprise: { price: '£79/mo', features: ENTERPRISE_FEATURES.slice(0, 5) },
   }
 
