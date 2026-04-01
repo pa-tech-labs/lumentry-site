@@ -264,7 +264,7 @@ function Hero({ onTrialClick }: { onTrialClick: () => void }) {
         }} />
       </div>
 
-      <div style={{ position: 'relative', maxWidth: '860px', width: '100%', animation: 'fadeUp 0.8s ease both' }}>
+      <div style={{ position: 'relative', maxWidth: '860px', width: '100%', animation: 'slideUp 0.8s ease both' }}>
         {/* Eyebrow */}
         <div style={{
           display: 'inline-flex', alignItems: 'center', gap: '8px',
