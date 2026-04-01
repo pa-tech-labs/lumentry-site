@@ -92,7 +92,8 @@ const MARQUEE_ITEMS = [
 
 const PRO_FEATURES = [
   'Online booking portal',
-  'Up to 3 rooms / venues',
+  '1 venue',
+  'Up to 3 rooms',
   'Email & SMS campaigns',
   'Promo codes & discounts',
   'Analytics dashboard',
@@ -100,14 +101,16 @@ const PRO_FEATURES = [
 
 const BUSINESS_FEATURES = [
   'Everything in Pro',
-  'Up to 5 rooms / venues',
+  'Up to 3 venues',
+  'Up to 5 rooms',
   'Smart lock integration',
   'Automated access codes',
 ]
 
 const ENTERPRISE_FEATURES = [
   'Everything in Business',
-  'Up to 10 rooms / venues',
+  'Up to 10 venues',
+  'Up to 10 rooms',
   'CRM & client management',
   'White label branding',
   'Custom email domain',
