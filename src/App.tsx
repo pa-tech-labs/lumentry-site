@@ -335,13 +335,13 @@ function LogosBar() {
   const doubled = [...MARQUEE_ITEMS, ...MARQUEE_ITEMS]
   return (
     <section style={{
-      padding: '72px 0',
-      background: '#0f0f0f',
-      borderTop: '1px solid #222',
-      borderBottom: '1px solid #222',
+      padding: '48px 0',
+      background: '#111111',
+      borderTop: '1px solid #2a2a2a',
+      borderBottom: '1px solid #2a2a2a',
     }}>
       {/* Label with subtle brand glow behind it */}
-      <div style={{ position: 'relative', textAlign: 'center', marginBottom: '36px' }}>
+      <div style={{ position: 'relative', textAlign: 'center', marginBottom: '32px' }}>
         <div style={{
           position: 'absolute', top: '50%', left: '50%',
           transform: 'translate(-50%, -50%)',
@@ -350,41 +350,56 @@ function LogosBar() {
           filter: 'blur(8px)',
           pointerEvents: 'none',
         }} />
-        <p style={{
-          position: 'relative',
-          display: 'inline-block',
-          fontSize: '11px', fontWeight: 700,
-          color: '#666', letterSpacing: '0.15em',
-          textTransform: 'uppercase',
-          margin: 0,
-        }}>
-          Trusted by venues across the UK
-        </p>
+        <div style={{ position: 'relative', display: 'inline-block' }}>
+          <p style={{
+            fontSize: '12px', fontWeight: 700,
+            color: '#888', letterSpacing: '0.2em',
+            textTransform: 'uppercase',
+            margin: '0 0 8px',
+          }}>
+            Trusted by venues across the UK
+          </p>
+          {/* Gradient underline */}
+          <div style={{
+            width: '40px', height: '2px',
+            background: 'linear-gradient(90deg, #a78bfa, #ec4899)',
+            borderRadius: '1px',
+            margin: '0 auto',
+          }} />
+        </div>
       </div>
 
       {/* Marquee with CSS mask-image fade edges */}
       <div style={{
         overflow: 'hidden',
-        WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
-        maskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
+        WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)',
+        maskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)',
       }}>
         <div style={{
           display: 'flex',
-          animation: 'marquee 28s linear infinite',
+          animation: 'marquee 35s linear infinite',
           width: 'max-content',
         }}>
           {doubled.map((item, i) => (
             <span
               key={i}
               style={{
-                display: 'inline-flex', alignItems: 'center', gap: '12px',
+                display: 'inline-flex', alignItems: 'center', gap: '14px',
                 padding: '0 36px',
-                fontSize: '14px', fontWeight: 500,
-                color: '#777',
+                fontSize: '15px', fontWeight: 600,
+                color: '#aaaaaa',
                 whiteSpace: 'nowrap',
               }}
             >
-              <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'rgba(167,139,250,0.6)', flexShrink: 0 }} />
+              <span style={{
+                fontSize: '10px',
+                background: 'linear-gradient(135deg, #a78bfa, #ec4899)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                flexShrink: 0,
+                lineHeight: 1,
+              }}>●</span>
               {item}
             </span>
           ))}
