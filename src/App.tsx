@@ -332,31 +332,39 @@ function LogosBar() {
   const doubled = [...MARQUEE_ITEMS, ...MARQUEE_ITEMS]
   return (
     <section style={{
-      padding: '56px 0',
+      padding: '72px 0',
       background: '#0f0f0f',
       borderTop: '1px solid #222',
       borderBottom: '1px solid #222',
     }}>
-      <p style={{
-        textAlign: 'center', fontSize: '11px', fontWeight: 700,
-        color: 'rgba(255,255,255,0.45)', letterSpacing: '0.2em',
-        textTransform: 'uppercase', fontVariant: 'small-caps',
-        marginBottom: '32px',
+      {/* Label with subtle brand glow behind it */}
+      <div style={{ position: 'relative', textAlign: 'center', marginBottom: '36px' }}>
+        <div style={{
+          position: 'absolute', top: '50%', left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '240px', height: '32px',
+          background: 'radial-gradient(ellipse at center, rgba(139,92,246,0.18) 0%, transparent 70%)',
+          filter: 'blur(8px)',
+          pointerEvents: 'none',
+        }} />
+        <p style={{
+          position: 'relative',
+          display: 'inline-block',
+          fontSize: '11px', fontWeight: 700,
+          color: '#666', letterSpacing: '0.15em',
+          textTransform: 'uppercase',
+          margin: 0,
+        }}>
+          Trusted by venues across the UK
+        </p>
+      </div>
+
+      {/* Marquee with CSS mask-image fade edges */}
+      <div style={{
+        overflow: 'hidden',
+        WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
+        maskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
       }}>
-        Trusted by venues across the UK
-      </p>
-      {/* Marquee with fade masks */}
-      <div style={{ position: 'relative', overflow: 'hidden' }}>
-        {/* Left fade */}
-        <div style={{
-          position: 'absolute', left: 0, top: 0, bottom: 0, width: '120px', zIndex: 1, pointerEvents: 'none',
-          background: 'linear-gradient(to right, #0f0f0f, transparent)',
-        }} />
-        {/* Right fade */}
-        <div style={{
-          position: 'absolute', right: 0, top: 0, bottom: 0, width: '120px', zIndex: 1, pointerEvents: 'none',
-          background: 'linear-gradient(to left, #0f0f0f, transparent)',
-        }} />
         <div style={{
           display: 'flex',
           animation: 'marquee 28s linear infinite',
@@ -368,8 +376,8 @@ function LogosBar() {
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '12px',
                 padding: '0 36px',
-                fontSize: '15px', fontWeight: 500,
-                color: '#888',
+                fontSize: '14px', fontWeight: 500,
+                color: '#777',
                 whiteSpace: 'nowrap',
               }}
             >
