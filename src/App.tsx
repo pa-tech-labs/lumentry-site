@@ -858,7 +858,7 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
         border: '1px solid rgba(255,255,255,0.1)',
         borderRadius: '20px',
         width: '100%',
-        maxWidth: step === 2 ? '720px' : '480px',
+        maxWidth: step === 2 ? '940px' : '480px',
         overflow: 'hidden',
         boxShadow: '0 32px 80px rgba(0,0,0,0.6)',
         transition: 'max-width 0.3s ease',
@@ -891,7 +891,7 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
             {step < 3 && (
               <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', margin: '4px 0 0' }}>
                 {step === 1 && '1 month free trial · No credit card required'}
-                {step === 2 && 'Both plans include a 1-month free trial'}
+                {step === 2 && 'All plans include a 1-month free trial'}
               </p>
             )}
           </div>
@@ -974,25 +974,26 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
           {step === 2 && (
             <div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px' }}>
-                {(['pro', 'enterprise'] as Plan[]).map(plan => {
+                {(['pro', 'business', 'enterprise'] as Plan[]).map(plan => {
                   const { price, features } = planDetails[plan]
-                  const isEnterprise = plan === 'enterprise'
+                  const isFeatured = plan === 'business'
+                  const PLAN_LABELS: Record<Plan, string> = { pro: 'Pro', business: 'Business', enterprise: 'Enterprise' }
                   return (
                     <div
                       key={plan}
                       style={{
                         background: '#0d0d0d',
-                        border: `1px solid ${isEnterprise ? 'rgba(167,139,250,0.35)' : 'rgba(255,255,255,0.08)'}`,
+                        border: `1px solid ${isFeatured ? 'rgba(167,139,250,0.35)' : 'rgba(255,255,255,0.08)'}`,
                         borderRadius: '16px', padding: '28px',
                         position: 'relative', overflow: 'hidden',
                       }}
                     >
-                      {isEnterprise && (
+                      {isFeatured && (
                         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: 'linear-gradient(90deg, #a78bfa, #ec4899, #f97316)' }} />
                       )}
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
                         <span style={{ fontSize: '12px', fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                          {plan === 'pro' ? 'Pro' : 'Enterprise'}
+                          {PLAN_LABELS[plan]}
                         </span>
                         <span style={{ fontSize: '10px', fontWeight: 700, padding: '2px 8px', background: 'rgba(167,139,250,0.15)', border: '1px solid rgba(167,139,250,0.3)', borderRadius: '999px', color: '#a78bfa' }}>1 month free</span>
                       </div>
@@ -1009,10 +1010,10 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
                       <button
                         onClick={() => !loading && handleSelectPlan(plan)}
                         disabled={loading}
-                        className={isEnterprise ? 'grad-btn' : 'ghost-btn'}
+                        className={isFeatured ? 'grad-btn' : 'ghost-btn'}
                         style={{ width: '100%', height: '44px', borderRadius: '10px', fontSize: '14px', fontWeight: 600, opacity: loading ? 0.6 : 1, cursor: loading ? 'not-allowed' : 'pointer' }}
                       >
-                        {loading ? 'Creating your account…' : `Select ${plan === 'pro' ? 'Pro' : 'Enterprise'}`}
+                        {loading ? 'Creating your account…' : `Select ${PLAN_LABELS[plan]}`}
                       </button>
                     </div>
                   )
