@@ -107,7 +107,7 @@ const BUSINESS_FEATURES = [
 
 const ENTERPRISE_FEATURES = [
   'Everything in Business',
-  'Unlimited rooms & resources',
+  'Up to 10 rooms / venues',
   'CRM & client management',
   'White label branding',
   'Custom email domain',
@@ -516,13 +516,14 @@ const FREE_BADGE = (
 )
 
 function PricingCard({
-  plan, price, tagline, features, featured, onTrialClick,
+  plan, price, tagline, features, featured, note, onTrialClick,
 }: {
   plan: Plan
   price: string
   tagline: string
   features: string[]
   featured?: boolean
+  note?: string
   onTrialClick: (plan: Plan) => void
 }) {
   const label = plan === 'pro' ? 'Pro' : plan === 'business' ? 'Business' : 'Enterprise'
@@ -579,7 +580,7 @@ function PricingCard({
         <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)', margin: '6px 0 0' }}>{tagline}</p>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '32px', flex: 1 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: note ? '16px' : '32px', flex: 1 }}>
         {features.map(f => (
           <div key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
             <CheckIcon />
@@ -587,6 +588,9 @@ function PricingCard({
           </div>
         ))}
       </div>
+      {note && (
+        <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', margin: '0 0 20px', fontStyle: 'italic' }}>{note}</p>
+      )}
 
       <button
         onClick={() => onTrialClick(plan)}
@@ -652,6 +656,7 @@ function Pricing({ onTrialClick }: { onTrialClick: (plan?: Plan) => void }) {
             price="£79"
             tagline="Full power for growing businesses"
             features={ENTERPRISE_FEATURES}
+            note="Need more? Contact us for a bespoke package"
             onTrialClick={handleClick}
           />
         </div>
