@@ -92,7 +92,7 @@ const MARQUEE_ITEMS = [
 
 const PRO_FEATURES = [
   'Online booking portal',
-  'Up to 3 rooms / resources',
+  'Up to 5 rooms / venues',
   'Email & SMS campaigns',
   'Promo codes & discounts',
   'Analytics dashboard',
@@ -100,7 +100,7 @@ const PRO_FEATURES = [
 
 const BUSINESS_FEATURES = [
   'Everything in Pro',
-  'Up to 10 rooms / resources',
+  'Up to 10 rooms / venues',
   'Smart lock integration',
   'Automated access codes',
 ]
@@ -332,21 +332,33 @@ function LogosBar() {
   const doubled = [...MARQUEE_ITEMS, ...MARQUEE_ITEMS]
   return (
     <section style={{
-      padding: '48px 0',
-      borderTop: '1px solid rgba(255,255,255,0.06)',
-      borderBottom: '1px solid rgba(255,255,255,0.06)',
-      overflow: 'hidden',
+      padding: '56px 0',
+      background: '#0f0f0f',
+      borderTop: '1px solid #222',
+      borderBottom: '1px solid #222',
     }}>
       <p style={{
-        textAlign: 'center', fontSize: '13px', fontWeight: 500,
-        color: 'rgba(255,255,255,0.3)', letterSpacing: '0.08em',
-        textTransform: 'uppercase', marginBottom: '28px',
+        textAlign: 'center', fontSize: '11px', fontWeight: 700,
+        color: 'rgba(255,255,255,0.45)', letterSpacing: '0.2em',
+        textTransform: 'uppercase', fontVariant: 'small-caps',
+        marginBottom: '32px',
       }}>
         Trusted by venues across the UK
       </p>
+      {/* Marquee with fade masks */}
       <div style={{ position: 'relative', overflow: 'hidden' }}>
+        {/* Left fade */}
         <div style={{
-          display: 'flex', gap: '0',
+          position: 'absolute', left: 0, top: 0, bottom: 0, width: '120px', zIndex: 1, pointerEvents: 'none',
+          background: 'linear-gradient(to right, #0f0f0f, transparent)',
+        }} />
+        {/* Right fade */}
+        <div style={{
+          position: 'absolute', right: 0, top: 0, bottom: 0, width: '120px', zIndex: 1, pointerEvents: 'none',
+          background: 'linear-gradient(to left, #0f0f0f, transparent)',
+        }} />
+        <div style={{
+          display: 'flex',
           animation: 'marquee 28s linear infinite',
           width: 'max-content',
         }}>
@@ -357,11 +369,11 @@ function LogosBar() {
                 display: 'inline-flex', alignItems: 'center', gap: '12px',
                 padding: '0 36px',
                 fontSize: '15px', fontWeight: 500,
-                color: 'rgba(255,255,255,0.45)',
+                color: '#888',
                 whiteSpace: 'nowrap',
               }}
             >
-              <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'rgba(167,139,250,0.5)', flexShrink: 0 }} />
+              <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'rgba(167,139,250,0.6)', flexShrink: 0 }} />
               {item}
             </span>
           ))}
