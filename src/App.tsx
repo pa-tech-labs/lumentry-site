@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { IMG_GRID_1, IMG_GRID_2, IMG_GRID_3, IMG_GRID_4, IMG_GRID_5, IMG_INDUSTRY_1, IMG_INDUSTRY_2, IMG_INDUSTRY_3, IMG_STEP_1, IMG_STEP_2, IMG_STEP_3 } from './config/images'
+import { IMG_GRID_1, IMG_GRID_2, IMG_GRID_3, IMG_GRID_4, IMG_GRID_5, IMG_ALT_1, IMG_ALT_2, IMG_ALT_3, IMG_ALT_4, IMG_STEP_1, IMG_STEP_2, IMG_STEP_3 } from './config/images'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -377,10 +377,20 @@ function HeroGrid() {
           .hero-grid-row2 > div:first-child { flex: none !important; width: 100% !important; }
         }
       `}</style>
+      <div style={{ maxWidth: '1100px', margin: '48px auto 12px', padding: '0 40px' }}>
+        <h2 style={{
+          fontFamily: "'Sora', system-ui, sans-serif",
+          fontSize: 'clamp(24px, 3.5vw, 38px)',
+          fontWeight: 800, letterSpacing: '-0.025em', lineHeight: 1.15,
+          color: '#1a1a2e', margin: 0, textAlign: 'left',
+        }}>
+          Built for <em style={{ fontStyle: 'italic', fontWeight: 800 }}>every booking business</em>
+        </h2>
+      </div>
       <div
         className="hero-grid-wrap"
         style={{
-          maxWidth: '1100px', margin: '52px auto 0',
+          maxWidth: '1100px', margin: '0 auto 0',
           padding: '0 40px',
           display: 'flex', flexDirection: 'column', gap: '12px',
           animation: 'slideUp 1s ease 0.2s both',
@@ -542,71 +552,130 @@ function Hero({ onTrialClick }: { onTrialClick: () => void }) {
   )
 }
 
-// ── Industry Strip ────────────────────────────────────────────────────────────
+// ── Alternating Feature Rows ──────────────────────────────────────────────────
 
-const INDUSTRY_COLS = [
+const ALT_ROWS = [
   {
-    img: IMG_INDUSTRY_1,
-    alt: 'Music studio recording console',
-    heading: 'Music studios & rehearsal rooms',
-    desc: 'Let clients book rooms and sessions online 24/7. Manage engineer availability, send automated reminders, and track repeat bookings effortlessly.',
+    img: IMG_ALT_1,
+    alt: 'Person frustrated at phone',
+    imgLeft: true,
+    label: 'THE PROBLEM',
+    heading: "You're losing bookings while you sleep",
+    body: "Every missed call, unanswered DM, or 'I'll book later' is revenue walking out the door. Most small businesses still rely on phone calls and manual back-and-forth — leaving money on the table every single day.",
+    bullets: [
+      '24/7 online booking — clients book even at 2am',
+      'No more DMs, calls or chasing confirmations',
+      'Instant booking confirmation sent automatically',
+    ],
   },
   {
-    img: IMG_INDUSTRY_2,
-    alt: 'Hair salon interior',
-    heading: 'Salons, spas & wellness',
-    desc: 'Fill your appointment book without the phone calls. Track client history, run loyalty campaigns, and keep no-shows to a minimum with automated reminders.',
+    img: IMG_ALT_2,
+    alt: 'Person smiling at phone notification',
+    imgLeft: false,
+    label: 'AUTOMATED FOLLOW-UPS',
+    heading: "Your business runs even when you're not there",
+    body: 'Lumentry handles the entire client journey for you — from booking confirmation to post-visit follow-up. Automated reminders slash no-shows. Win-back campaigns bring lapsed clients back without you lifting a finger.',
+    bullets: [
+      'Automated SMS & email reminders before every booking',
+      'Win-back campaigns triggered when clients go quiet',
+      'Upsell messages sent automatically after each visit',
+    ],
   },
   {
-    img: IMG_INDUSTRY_3,
-    alt: 'Gym and fitness space',
-    heading: 'Gyms, fitness & co-working',
-    desc: 'Schedule classes, manage memberships, and let members book desks or sessions from any device. Access control and billing handled automatically.',
+    img: IMG_ALT_3,
+    alt: 'Business owner reviewing analytics on laptop',
+    imgLeft: true,
+    label: 'CLIENT INTELLIGENCE',
+    heading: 'Know exactly who your best clients are',
+    body: 'Stop guessing. Lumentry tracks every visit, every pound spent, and every referral — giving you a complete picture of your client base. Reward loyalty, target your top spenders, and stop wasting budget on the wrong people.',
+    bullets: [
+      'Full visit history and lifetime spend per client',
+      'Loyalty leaderboard — see your top clients at a glance',
+      'Promo codes and discounts to reward and retain',
+    ],
+  },
+  {
+    img: IMG_ALT_4,
+    alt: 'Modern studio with smart access panel',
+    imgLeft: false,
+    label: 'SMART ACCESS',
+    heading: 'The tools big brands use — without the big price tag',
+    body: 'Smart lock integration, branded booking pages, custom email domains, automated access codes — Lumentry gives your business the infrastructure of an enterprise platform, at a flat monthly rate with no commissions and no contracts.',
+    bullets: [
+      'Automated door codes sent on booking confirmation',
+      'White-label booking page with your own branding',
+      'Custom sending domain for a professional email presence',
+    ],
   },
 ]
 
-function IndustryStrip() {
+function AlternatingRows() {
   return (
     <>
       <style>{`
-        @media (max-width: 720px) {
-          .industry-cols { flex-direction: column !important; }
+        @media (max-width: 780px) {
+          .alt-row { flex-direction: column !important; }
+          .alt-row-img { width: 100% !important; flex: none !important; height: 280px !important; }
         }
       `}</style>
-      <section style={{ background: '#fff', padding: '80px 24px' }}>
+      <section style={{ background: '#fff', padding: '0 24px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-          <h2 style={{
-            fontFamily: "'Sora', system-ui, sans-serif",
-            fontSize: 'clamp(32px, 4.5vw, 52px)',
-            fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1,
-            color: '#1a1a2e', margin: '0 0 52px',
-          }}>
-            Built for <em style={{ fontStyle: 'italic', fontWeight: 800 }}>every booking business</em>
-          </h2>
+          {ALT_ROWS.map((row, i) => (
+            <div
+              key={row.label}
+              className="alt-row"
+              style={{
+                display: 'flex',
+                flexDirection: row.imgLeft ? 'row' : 'row-reverse',
+                gap: '60px',
+                alignItems: 'center',
+                padding: '80px 0',
+                borderBottom: i < ALT_ROWS.length - 1 ? '1px solid #f0f0f5' : 'none',
+              }}
+            >
+              {/* Image */}
+              <div
+                className="alt-row-img"
+                style={{
+                  flex: '0 0 480px', height: '360px',
+                  borderRadius: '16px', overflow: 'hidden',
+                }}
+              >
+                <img
+                  src={row.img}
+                  alt={row.alt}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+                />
+              </div>
 
-          <div className="industry-cols" style={{ display: 'flex', gap: '24px' }}>
-            {INDUSTRY_COLS.map(col => (
-              <div key={col.heading} style={{ flex: 1, minWidth: 0 }}>
-                <div style={{
-                  height: '340px', borderRadius: '16px', overflow: 'hidden', marginBottom: '24px',
-                }}>
-                  <img
-                    src={col.img}
-                    alt={col.alt}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
-                  />
-                </div>
+              {/* Text */}
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <p style={{
+                  fontSize: '12px', fontWeight: 600, color: '#6366f1',
+                  letterSpacing: '0.08em', textTransform: 'uppercase',
+                  margin: '0 0 14px',
+                }}>{row.label}</p>
                 <h3 style={{
                   fontFamily: "'Sora', system-ui, sans-serif",
-                  fontSize: '19px', fontWeight: 700, color: '#1a1a2e',
-                  margin: '0 0 10px', letterSpacing: '-0.01em',
-                }}>{col.heading}</h3>
+                  fontSize: '32px', fontWeight: 800,
+                  color: '#0d0d1a', letterSpacing: '-0.025em', lineHeight: 1.2,
+                  margin: '0 0 16px',
+                }}>{row.heading}</h3>
                 <p style={{
-                  fontSize: '15px', color: '#6b7280', lineHeight: 1.65, margin: 0,
-                }}>{col.desc}</p>
+                  fontSize: '16px', color: '#555',
+                  lineHeight: 1.7, margin: '0 0 24px',
+                }}>{row.body}</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  {row.bullets.map(b => (
+                    <div key={b} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                      <span style={{ color: '#6366f1', fontWeight: 700, fontSize: '15px', lineHeight: '22px', flexShrink: 0 }}>✓</span>
+                      <span style={{ fontSize: '15px', color: '#1a1a2e', lineHeight: '22px' }}>{b}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </section>
     </>
@@ -1439,7 +1508,7 @@ export default function App() {
       <Navbar onTrialClick={() => openTrial()} />
       <main>
         <Hero onTrialClick={() => openTrial()} />
-        <IndustryStrip />
+        <AlternatingRows />
         <FeaturesGrid />
         <DarkBand onTrialClick={() => openTrial()} />
         <HowItWorks />
