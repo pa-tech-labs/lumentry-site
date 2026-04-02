@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { IMG_GRID_1, IMG_GRID_2, IMG_GRID_3, IMG_GRID_4, IMG_GRID_5, IMG_STEP_1, IMG_STEP_2, IMG_STEP_3 } from './config/images'
+import { IMG_GRID_1, IMG_GRID_2, IMG_GRID_3, IMG_GRID_4, IMG_GRID_5, IMG_INDUSTRY_1, IMG_INDUSTRY_2, IMG_INDUSTRY_3, IMG_STEP_1, IMG_STEP_2, IMG_STEP_3 } from './config/images'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -53,11 +53,6 @@ const FEATURE_ICONS = [
   </svg>,
 ]
 
-const INDUSTRY_PILLS = [
-  'Music Studio', 'Hair Salon', 'Barber', 'Beauty Salon', 'Nail Studio',
-  'Yoga Studio', 'Gym', 'Holiday Let', 'Tattoo Studio', 'Massage Therapy',
-  'Photography Studio', 'Co-working', 'Event Space', 'Rehearsal Room',
-]
 
 const STEPS = [
   {
@@ -145,81 +140,89 @@ function CheckIcon({ light = false }: { light?: boolean }) {
   )
 }
 
-// ── Stats Band ────────────────────────────────────────────────────────────────
-
-const STATS = [
-  { value: '500+', label: 'businesses' },
-  { value: '£2M+', label: 'processed' },
-  { value: '98%', label: 'client satisfaction' },
-]
-
-function StatsBand() {
-  return (
-    <section style={{ background: '#f5f5f7', padding: '28px 24px' }}>
-      <div style={{
-        maxWidth: '680px', margin: '0 auto',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        gap: '0',
-        flexWrap: 'wrap',
-      }}>
-        {STATS.map((s, i) => (
-          <div key={s.label} style={{
-            display: 'flex', alignItems: 'center',
-          }}>
-            <div style={{ textAlign: 'center', padding: '0 36px' }}>
-              <div style={{
-                fontFamily: "'Sora', system-ui, sans-serif",
-                fontSize: 'clamp(24px, 4vw, 32px)',
-                fontWeight: 800, color: '#1a1a2e', letterSpacing: '-0.02em', lineHeight: 1,
-              }}>{s.value}</div>
-              <div style={{ fontSize: '13px', color: '#9ca3af', marginTop: '4px', fontWeight: 500 }}>{s.label}</div>
-            </div>
-            {i < STATS.length - 1 && (
-              <div style={{ width: '1px', height: '36px', background: '#e5e5ea', flexShrink: 0 }} />
-            )}
-          </div>
-        ))}
-      </div>
-    </section>
-  )
-}
-
-// ── Dark Band (mid-page) ───────────────────────────────────────────────────────
+// ── Dark Band (mid-page) ──────────────────────────────────────────────────────
 
 function DarkBand({ onTrialClick }: { onTrialClick: () => void }) {
   return (
-    <section style={{
-      background: '#0d0d0d',
-      padding: '80px 24px',
-      textAlign: 'center',
-    }}>
-      <div style={{ maxWidth: '700px', margin: '0 auto' }}>
-        <h2 style={{
-          fontFamily: "'Sora', system-ui, sans-serif",
-          fontSize: 'clamp(28px, 5vw, 52px)',
-          fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1,
-          color: '#ffffff', margin: '0 0 16px',
-        }}>
-          No contracts. No commissions.<br />Just growth.
-        </h2>
-        <p style={{
-          fontSize: '17px', color: 'rgba(255,255,255,0.5)',
-          lineHeight: 1.65, maxWidth: '440px', margin: '0 auto 36px',
-        }}>
-          Flat monthly pricing — you keep 100% of every booking. Scale up or cancel anytime.
-        </p>
-        <button
-          onClick={onTrialClick}
-          className="grad-btn"
-          style={{
-            height: '52px', padding: '0 36px', borderRadius: '12px',
-            fontSize: '16px', fontWeight: 600,
-          }}
-        >
-          Start free trial →
-        </button>
-      </div>
-    </section>
+    <>
+      <style>{`
+        @media (max-width: 640px) {
+          .dark-band-stats { flex-direction: column !important; }
+          .dark-band-divider { width: 60px !important; height: 1px !important; background: rgba(255,255,255,0.12) !important; }
+          .dark-band-stat { padding: 24px 0 !important; }
+        }
+      `}</style>
+      <section style={{ background: '#000', padding: '80px 24px', textAlign: 'center' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <h2 style={{
+            fontFamily: "'Sora', system-ui, sans-serif",
+            fontSize: 'clamp(32px, 5vw, 56px)',
+            fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1,
+            color: '#fff', margin: '0 0 64px',
+          }}>
+            No contracts. No commissions.<br />Just growth.
+          </h2>
+
+          {/* Two stat columns */}
+          <div className="dark-band-stats" style={{
+            display: 'flex', alignItems: 'stretch',
+            justifyContent: 'center', margin: '0 0 56px',
+          }}>
+            <div className="dark-band-stat" style={{ flex: 1, padding: '0 48px' }}>
+              <div style={{
+                fontFamily: "'Sora', system-ui, sans-serif",
+                fontSize: 'clamp(64px, 9vw, 96px)',
+                fontWeight: 800, color: '#fff',
+                letterSpacing: '-0.04em', lineHeight: 1,
+                marginBottom: '16px',
+              }}>£0</div>
+              <p style={{
+                fontSize: '16px', color: 'rgba(255,255,255,0.5)',
+                lineHeight: 1.6, margin: 0, maxWidth: '240px', marginLeft: 'auto', marginRight: 'auto',
+              }}>
+                No monthly fees, contracts or surprises.
+              </p>
+            </div>
+
+            <div className="dark-band-divider" style={{
+              width: '1px', background: 'rgba(255,255,255,0.12)', flexShrink: 0,
+            }} />
+
+            <div className="dark-band-stat" style={{ flex: 1, padding: '0 48px' }}>
+              <div style={{
+                fontFamily: "'Sora', system-ui, sans-serif",
+                fontSize: 'clamp(64px, 9vw, 96px)',
+                fontWeight: 800, color: '#fff',
+                letterSpacing: '-0.04em', lineHeight: 1,
+                marginBottom: '16px',
+              }}>100%</div>
+              <p style={{
+                fontSize: '16px', color: 'rgba(255,255,255,0.5)',
+                lineHeight: 1.6, margin: 0, maxWidth: '240px', marginLeft: 'auto', marginRight: 'auto',
+              }}>
+                Of every booking goes straight to you.
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={onTrialClick}
+            style={{
+              height: '52px', padding: '0 36px', borderRadius: '12px',
+              background: 'transparent', color: '#fff',
+              fontSize: '16px', fontWeight: 600, cursor: 'pointer',
+              border: '1.5px solid rgba(255,255,255,0.5)',
+              fontFamily: "'DM Sans', sans-serif",
+              transition: 'border-color 0.2s, background 0.2s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = '#fff'; e.currentTarget.style.background = 'rgba(255,255,255,0.06)' }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)'; e.currentTarget.style.background = 'transparent' }}
+          >
+            Start free trial →
+          </button>
+        </div>
+      </section>
+    </>
   )
 }
 
@@ -541,41 +544,72 @@ function Hero({ onTrialClick }: { onTrialClick: () => void }) {
 
 // ── Industry Strip ────────────────────────────────────────────────────────────
 
+const INDUSTRY_COLS = [
+  {
+    img: IMG_INDUSTRY_1,
+    alt: 'Music studio recording console',
+    heading: 'Music studios & rehearsal rooms',
+    desc: 'Let clients book rooms and sessions online 24/7. Manage engineer availability, send automated reminders, and track repeat bookings effortlessly.',
+  },
+  {
+    img: IMG_INDUSTRY_2,
+    alt: 'Hair salon interior',
+    heading: 'Salons, spas & wellness',
+    desc: 'Fill your appointment book without the phone calls. Track client history, run loyalty campaigns, and keep no-shows to a minimum with automated reminders.',
+  },
+  {
+    img: IMG_INDUSTRY_3,
+    alt: 'Gym and fitness space',
+    heading: 'Gyms, fitness & co-working',
+    desc: 'Schedule classes, manage memberships, and let members book desks or sessions from any device. Access control and billing handled automatically.',
+  },
+]
+
 function IndustryStrip() {
   return (
-    <section style={{
-      padding: '48px 24px',
-      background: '#f9f9fb',
-      borderTop: '1px solid #e5e5ea',
-      borderBottom: '1px solid #e5e5ea',
-    }}>
-      <p style={{
-        textAlign: 'center',
-        fontSize: '12px', fontWeight: 700,
-        color: '#9ca3af', letterSpacing: '0.15em',
-        textTransform: 'uppercase', margin: '0 0 24px',
-      }}>
-        Built for every booking business
-      </p>
-      <div style={{
-        display: 'flex', flexWrap: 'wrap', gap: '10px',
-        justifyContent: 'center', maxWidth: '900px', margin: '0 auto',
-      }}>
-        {INDUSTRY_PILLS.map(pill => (
-          <span key={pill} style={{
-            display: 'inline-block',
-            padding: '7px 16px',
-            borderRadius: '999px',
-            border: '1px solid #e5e5ea',
-            background: '#fff',
-            fontSize: '13px', fontWeight: 500, color: '#374151',
-            whiteSpace: 'nowrap',
+    <>
+      <style>{`
+        @media (max-width: 720px) {
+          .industry-cols { flex-direction: column !important; }
+        }
+      `}</style>
+      <section style={{ background: '#fff', padding: '80px 24px' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+          <h2 style={{
+            fontFamily: "'Sora', system-ui, sans-serif",
+            fontSize: 'clamp(32px, 4.5vw, 52px)',
+            fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1,
+            color: '#1a1a2e', margin: '0 0 52px',
           }}>
-            {pill}
-          </span>
-        ))}
-      </div>
-    </section>
+            Built for <em style={{ fontStyle: 'italic', fontWeight: 800 }}>every booking business</em>
+          </h2>
+
+          <div className="industry-cols" style={{ display: 'flex', gap: '24px' }}>
+            {INDUSTRY_COLS.map(col => (
+              <div key={col.heading} style={{ flex: 1, minWidth: 0 }}>
+                <div style={{
+                  height: '340px', borderRadius: '16px', overflow: 'hidden', marginBottom: '24px',
+                }}>
+                  <img
+                    src={col.img}
+                    alt={col.alt}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+                  />
+                </div>
+                <h3 style={{
+                  fontFamily: "'Sora', system-ui, sans-serif",
+                  fontSize: '19px', fontWeight: 700, color: '#1a1a2e',
+                  margin: '0 0 10px', letterSpacing: '-0.01em',
+                }}>{col.heading}</h3>
+                <p style={{
+                  fontSize: '15px', color: '#6b7280', lineHeight: 1.65, margin: 0,
+                }}>{col.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   )
 }
 
@@ -913,6 +947,103 @@ function Pricing({ onTrialClick }: { onTrialClick: (plan?: Plan) => void }) {
         <p style={{ textAlign: 'center', fontSize: '13px', color: '#9ca3af', marginTop: '36px' }}>
           No credit card required · Cancel anytime · All prices exclude VAT
         </p>
+      </div>
+    </section>
+  )
+}
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+
+const FAQ_ITEMS = [
+  {
+    q: 'What is Lumentry?',
+    a: 'Lumentry is an all-in-one booking, CRM and marketing platform for studios, salons and service businesses. One flat monthly fee, no commissions.',
+  },
+  {
+    q: 'How do I get started?',
+    a: "Sign up, tell us about your business, and you'll have a live booking page in under 10 minutes. No technical setup required.",
+  },
+  {
+    q: 'Do my clients need to download an app?',
+    a: 'No. Your clients book through a branded web page on any device. No app download, no account required on their end.',
+  },
+  {
+    q: 'How do payments work?',
+    a: "Clients pay at the time of booking via card. Payments go directly to your Stripe account — Lumentry never holds your money.",
+  },
+  {
+    q: 'Can I send email and SMS campaigns?',
+    a: 'Yes. Lumentry includes built-in email and SMS marketing tools. Create campaigns, send promo codes, and automate win-back messages from your dashboard.',
+  },
+  {
+    q: 'Is there a contract?',
+    a: 'No contracts, no lock-in. You can upgrade, downgrade or cancel your plan at any time.',
+  },
+]
+
+function FAQ() {
+  const [open, setOpen] = useState<number | null>(0)
+
+  return (
+    <section style={{ background: '#fff', padding: '80px 24px' }}>
+      <div style={{ maxWidth: '780px', margin: '0 auto' }}>
+        <h2 style={{
+          fontFamily: "'Sora', system-ui, sans-serif",
+          fontSize: 'clamp(36px, 5vw, 48px)',
+          fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1,
+          color: '#1a1a2e', margin: '0 0 48px',
+        }}>
+          FAQs
+        </h2>
+
+        <div>
+          {FAQ_ITEMS.map((item, i) => {
+            const isOpen = open === i
+            return (
+              <div
+                key={item.q}
+                style={{ borderBottom: '1px solid #e5e5ea' }}
+              >
+                <button
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  style={{
+                    width: '100%', display: 'flex', alignItems: 'center',
+                    justifyContent: 'space-between', gap: '16px',
+                    padding: '24px 0', background: 'none', border: 'none',
+                    cursor: 'pointer', textAlign: 'left',
+                  }}
+                >
+                  <span style={{
+                    fontFamily: "'Sora', system-ui, sans-serif",
+                    fontSize: '17px', fontWeight: 700,
+                    color: '#1a1a2e', lineHeight: 1.4,
+                  }}>{item.q}</span>
+                  <span style={{
+                    flexShrink: 0, width: '28px', height: '28px',
+                    borderRadius: '50%', border: '1.5px solid #e5e5ea',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: '18px', color: '#6b7280', lineHeight: 1,
+                    transition: 'border-color 0.2s, color 0.2s',
+                    fontWeight: 400,
+                  }}>
+                    {isOpen ? '×' : '+'}
+                  </span>
+                </button>
+                <div style={{
+                  maxHeight: isOpen ? '400px' : '0',
+                  overflow: 'hidden',
+                  transition: 'max-height 0.3s ease',
+                }}>
+                  <p style={{
+                    fontSize: '15px', color: '#6b7280',
+                    lineHeight: 1.7, margin: '0 0 24px',
+                    paddingRight: '44px',
+                  }}>{item.a}</p>
+                </div>
+              </div>
+            )
+          })}
+        </div>
       </div>
     </section>
   )
@@ -1308,13 +1439,13 @@ export default function App() {
       <Navbar onTrialClick={() => openTrial()} />
       <main>
         <Hero onTrialClick={() => openTrial()} />
-        <StatsBand />
         <IndustryStrip />
         <FeaturesGrid />
         <DarkBand onTrialClick={() => openTrial()} />
         <HowItWorks />
         <Pricing onTrialClick={openTrial} />
         <DarkCTA onTrialClick={() => openTrial()} />
+        <FAQ />
       </main>
       <Footer />
       <TrialModal

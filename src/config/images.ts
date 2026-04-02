@@ -22,6 +22,20 @@ export const IMG_GRID_5 =
   'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80'
 // Row 2 right — business owner smiling at laptop
 
+// ── Industry section ──────────────────────────────────────────────────────────
+
+export const IMG_INDUSTRY_1 =
+  'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=700&q=80'
+// Music studios & rehearsal rooms — mixing console / recording studio
+
+export const IMG_INDUSTRY_2 =
+  'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=700&q=80'
+// Salons, spas & wellness — hair salon / beauty environment
+
+export const IMG_INDUSTRY_3 =
+  'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=700&q=80'
+// Gyms, fitness & co-working — gym / fitness space
+
 // ── How it works ──────────────────────────────────────────────────────────────
 
 export const IMG_STEP_1 =
