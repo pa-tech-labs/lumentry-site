@@ -186,7 +186,7 @@ function DarkBand({ onTrialClick }: { onTrialClick: () => void }) {
       `}</style>
       <section style={{ background: '#000', padding: '80px 24px', textAlign: 'center' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <h2 style={{
+          <h2 className="animate-on-scroll fade-up" style={{
             fontFamily: "'Sora', system-ui, sans-serif",
             fontSize: 'clamp(32px, 5vw, 56px)',
             fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1,
@@ -268,7 +268,7 @@ function DarkCTA({ onTrialClick }: { onTrialClick: () => void }) {
       textAlign: 'center',
     }}>
       <div style={{ maxWidth: '680px', margin: '0 auto' }}>
-        <h2 style={{
+        <h2 className="animate-on-scroll fade-up" style={{
           fontFamily: "'Sora', system-ui, sans-serif",
           fontSize: 'clamp(32px, 5.5vw, 60px)',
           fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05,
@@ -425,19 +425,18 @@ function HeroGrid() {
           maxWidth: '1100px', margin: '0 auto 0',
           padding: '0 40px',
           display: 'flex', flexDirection: 'column', gap: '12px',
-          animation: 'slideUp 1s ease 0.2s both',
         }}
       >
         {/* Row 1: 55/45 split */}
         <div className="hero-grid-row1" style={{ display: 'flex', gap: '12px' }}>
-          <div style={{ flex: '0 0 55%', height: '400px', borderRadius: '16px', overflow: 'hidden' }}>
+          <div className="animate-on-scroll scale-in" style={{ transitionDelay: '100ms', flex: '0 0 55%', height: '400px', borderRadius: '16px', overflow: 'hidden' }}>
             <img
               src={IMG_GRID_1}
               alt="Studio environment"
               style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
             />
           </div>
-          <div style={{ flex: 1, height: '400px', borderRadius: '16px', overflow: 'hidden' }}>
+          <div className="animate-on-scroll scale-in" style={{ transitionDelay: '200ms', flex: 1, height: '400px', borderRadius: '16px', overflow: 'hidden' }}>
             <img
               src={IMG_GRID_2}
               alt="Booking dashboard"
@@ -448,21 +447,21 @@ function HeroGrid() {
 
         {/* Row 2: 3 equal columns */}
         <div className="hero-grid-row2" style={{ display: 'flex', gap: '12px' }}>
-          <div style={{ flex: 1, height: '240px', borderRadius: '16px', overflow: 'hidden' }}>
+          <div className="animate-on-scroll scale-in" style={{ transitionDelay: '100ms', flex: 1, height: '240px', borderRadius: '16px', overflow: 'hidden' }}>
             <img
               src={IMG_GRID_3}
               alt="Mobile booking"
               style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
             />
           </div>
-          <div style={{ flex: 1, height: '240px', borderRadius: '16px', overflow: 'hidden' }}>
+          <div className="animate-on-scroll scale-in" style={{ transitionDelay: '200ms', flex: 1, height: '240px', borderRadius: '16px', overflow: 'hidden' }}>
             <img
               src={IMG_GRID_4}
               alt="Workspace lifestyle"
               style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
             />
           </div>
-          <div style={{ flex: 1, height: '240px', borderRadius: '16px', overflow: 'hidden' }}>
+          <div className="animate-on-scroll scale-in" style={{ transitionDelay: '300ms', flex: 1, height: '240px', borderRadius: '16px', overflow: 'hidden' }}>
             <img
               src={IMG_GRID_5}
               alt="Business owner at laptop"
@@ -496,7 +495,7 @@ function Hero({ onTrialClick }: { onTrialClick: () => void }) {
         background: 'radial-gradient(ellipse at top, rgba(99,102,241,0.08) 0%, transparent 65%)',
       }} />
 
-      <div style={{ position: 'relative', maxWidth: '760px', margin: '0 auto', animation: 'slideUp 0.7s ease both' }}>
+      <div style={{ position: 'relative', maxWidth: '760px', margin: '0 auto' }}>
         {/* Eyebrow */}
         <div style={{
           display: 'inline-flex', alignItems: 'center', gap: '8px',
@@ -509,7 +508,7 @@ function Hero({ onTrialClick }: { onTrialClick: () => void }) {
         </div>
 
         {/* Headline */}
-        <h1 style={{
+        <h1 className="animate-on-scroll fade-up" style={{
           fontFamily: "'Sora', system-ui, sans-serif",
           fontSize: 'clamp(40px, 6.5vw, 72px)',
           fontWeight: 800,
@@ -528,7 +527,7 @@ function Hero({ onTrialClick }: { onTrialClick: () => void }) {
         </h1>
 
         {/* Subheadline */}
-        <p style={{
+        <p className="animate-on-scroll fade-up-delay-1" style={{
           fontSize: 'clamp(16px, 2vw, 19px)',
           fontWeight: 400,
           color: '#6b7280',
@@ -540,7 +539,7 @@ function Hero({ onTrialClick }: { onTrialClick: () => void }) {
         </p>
 
         {/* CTAs */}
-        <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+        <div className="animate-on-scroll fade-up-delay-2" style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
           <button
             onClick={onTrialClick}
             style={{
@@ -655,7 +654,7 @@ function AlternatingRows() {
           {ALT_ROWS.map((row, i) => (
             <div
               key={row.label}
-              className="alt-row"
+              className="alt-row animate-on-scroll fade-up"
               style={{
                 display: 'flex',
                 flexDirection: row.imgLeft ? 'row' : 'row-reverse',
@@ -769,8 +768,8 @@ function FeaturesGrid() {
               gap: '20px',
             }}
           >
-            {FEATURE_HIGHLIGHTS.map(f => (
-              <div key={f.title} className="feat-card">
+            {FEATURE_HIGHLIGHTS.map((f, i) => (
+              <div key={f.title} className="feat-card animate-on-scroll scale-in" style={{ transitionDelay: `${(i % 4 + 1) * 100}ms` }}>
                 <div style={{
                   width: '48px', height: '48px', borderRadius: '12px',
                   background: 'rgba(99,102,241,0.15)',
@@ -937,9 +936,6 @@ function PricingCard({
         onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.01)')}
         onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
       >
-        {/* Purple accent bar */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: '#6366f1', borderRadius: '22px 22px 0 0' }} />
-
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
           <span style={{ fontSize: '12px', fontWeight: 700, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{label}</span>
           <span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 10px', background: '#6366f1', borderRadius: '999px', color: '#fff' }}>1 month free</span>
@@ -992,9 +988,6 @@ function PricingCard({
       onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.01)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.08)' }}
       onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = 'none' }}
     >
-      {/* Top accent bar */}
-      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: isEnterprise ? '#6366f1' : '#e5e5ea', borderRadius: '22px 22px 0 0' }} />
-
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
         <span style={{ fontSize: '12px', fontWeight: 700, color: '#9ca3af', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{label}</span>
         {isEnterprise
@@ -1072,9 +1065,9 @@ function Pricing({ onTrialClick }: { onTrialClick: (plan?: Plan) => void }) {
             alignItems: 'start',
           }}
         >
-          <PricingCard plan="pro" price="£29" tagline="Perfect for getting started" features={PRO_FEATURES} onTrialClick={handleClick} />
-          <PricingCard plan="business" price="£50" tagline="For venues that need access control" features={BUSINESS_FEATURES} featured onTrialClick={handleClick} />
-          <PricingCard plan="enterprise" price="£79" tagline="Full power for growing businesses" features={ENTERPRISE_FEATURES} note="Need more? Contact us for a bespoke package" onTrialClick={handleClick} />
+          <div className="animate-on-scroll fade-up-delay-1"><PricingCard plan="pro" price="£29" tagline="Perfect for getting started" features={PRO_FEATURES} onTrialClick={handleClick} /></div>
+          <div className="animate-on-scroll fade-up-delay-2"><PricingCard plan="business" price="£50" tagline="For venues that need access control" features={BUSINESS_FEATURES} featured onTrialClick={handleClick} /></div>
+          <div className="animate-on-scroll fade-up-delay-3"><PricingCard plan="enterprise" price="£79" tagline="Full power for growing businesses" features={ENTERPRISE_FEATURES} note="Need more? Contact us for a bespoke package" onTrialClick={handleClick} /></div>
         </div>
 
         <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '40px' }}>
@@ -1141,7 +1134,8 @@ function FAQ() {
             return (
               <div
                 key={item.q}
-                style={{ borderBottom: '1px solid #e5e5ea' }}
+                className="animate-on-scroll fade-up"
+                style={{ borderBottom: '1px solid #e5e5ea', transitionDelay: `${i * 60}ms` }}
               >
                 <button
                   onClick={() => setOpen(isOpen ? null : i)}
@@ -1567,6 +1561,22 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
 export default function App() {
   const [modalOpen, setModalOpen] = useState(false)
   const [modalPlan, setModalPlan] = useState<Plan | null>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.15 },
+    )
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
 
   const openTrial = (plan?: Plan) => {
     setModalPlan(plan ?? null)

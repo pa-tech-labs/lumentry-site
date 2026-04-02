@@ -113,6 +113,53 @@ input, select {
 ::-webkit-scrollbar-track { background: #f5f5f7; }
 ::-webkit-scrollbar-thumb { background: #d1d1d6; border-radius: 3px; }
 
+/* ── Scroll-triggered animations ─────────────────────────────────────────── */
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 600ms ease-out, transform 600ms ease-out;
+}
+.fade-up.is-visible { opacity: 1; transform: translateY(0); }
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 700ms ease-out;
+}
+.fade-in.is-visible { opacity: 1; }
+
+.scale-in {
+  opacity: 0;
+  transform: scale(0.94);
+  transition: opacity 600ms ease-out, transform 600ms ease-out;
+}
+.scale-in.is-visible { opacity: 1; transform: scale(1); }
+
+.fade-up-delay-1 {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 600ms ease-out 100ms, transform 600ms ease-out 100ms;
+}
+.fade-up-delay-2 {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 600ms ease-out 200ms, transform 600ms ease-out 200ms;
+}
+.fade-up-delay-3 {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 600ms ease-out 300ms, transform 600ms ease-out 300ms;
+}
+.fade-up-delay-4 {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 600ms ease-out 400ms, transform 600ms ease-out 400ms;
+}
+.fade-up-delay-1.is-visible,
+.fade-up-delay-2.is-visible,
+.fade-up-delay-3.is-visible,
+.fade-up-delay-4.is-visible { opacity: 1; transform: translateY(0); }
+
 @media (max-width: 860px) {
   .pricing-grid {
     grid-template-columns: 1fr !important;
