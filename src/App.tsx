@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { IMG_HERO_MOCKUP, IMG_STEP_1, IMG_STEP_2, IMG_STEP_3 } from './config/images'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -17,20 +18,39 @@ interface FormData {
 
 const FEATURE_HIGHLIGHTS = [
   {
-    icon: '📅',
     title: 'Smart Booking',
     desc: 'A beautiful, branded booking page your clients can use 24/7 — from any device, no app required.',
   },
   {
-    icon: '👥',
     title: 'Client Management',
     desc: 'Track visits, spending, and loyalty. Know exactly who your best clients are and keep them coming back.',
   },
   {
-    icon: '📣',
     title: 'Marketing Tools',
     desc: 'Send targeted email and SMS campaigns, run promo codes, and automate win-back messages with ease.',
   },
+]
+
+const FEATURE_ICONS = [
+  // Calendar icon
+  <svg key="cal" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+    <line x1="16" y1="2" x2="16" y2="6" />
+    <line x1="8" y1="2" x2="8" y2="6" />
+    <line x1="3" y1="10" x2="21" y2="10" />
+  </svg>,
+  // Users icon
+  <svg key="usr" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+  </svg>,
+  // Send/Megaphone icon
+  <svg key="mkt" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 2L11 13" />
+    <path d="M22 2L15 22l-4-9-9-4 20-7z" />
+  </svg>,
 ]
 
 const INDUSTRY_PILLS = [
@@ -122,6 +142,139 @@ function CheckIcon({ light = false }: { light?: boolean }) {
       <circle cx="7.5" cy="7.5" r="7" fill={bg} stroke={border} />
       <path d="M4.5 7.5l2 2 4-4" stroke="#6366f1" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
+  )
+}
+
+// ── Stats Band ────────────────────────────────────────────────────────────────
+
+const STATS = [
+  { value: '500+', label: 'businesses' },
+  { value: '£2M+', label: 'processed' },
+  { value: '98%', label: 'client satisfaction' },
+]
+
+function StatsBand() {
+  return (
+    <section style={{ background: '#f5f5f7', padding: '28px 24px' }}>
+      <div style={{
+        maxWidth: '680px', margin: '0 auto',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        gap: '0',
+        flexWrap: 'wrap',
+      }}>
+        {STATS.map((s, i) => (
+          <div key={s.label} style={{
+            display: 'flex', alignItems: 'center',
+          }}>
+            <div style={{ textAlign: 'center', padding: '0 36px' }}>
+              <div style={{
+                fontFamily: "'Sora', system-ui, sans-serif",
+                fontSize: 'clamp(24px, 4vw, 32px)',
+                fontWeight: 800, color: '#1a1a2e', letterSpacing: '-0.02em', lineHeight: 1,
+              }}>{s.value}</div>
+              <div style={{ fontSize: '13px', color: '#9ca3af', marginTop: '4px', fontWeight: 500 }}>{s.label}</div>
+            </div>
+            {i < STATS.length - 1 && (
+              <div style={{ width: '1px', height: '36px', background: '#e5e5ea', flexShrink: 0 }} />
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+// ── Dark Band (mid-page) ───────────────────────────────────────────────────────
+
+function DarkBand({ onTrialClick }: { onTrialClick: () => void }) {
+  return (
+    <section style={{
+      background: '#0d0d0d',
+      padding: '80px 24px',
+      textAlign: 'center',
+    }}>
+      <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+        <h2 style={{
+          fontFamily: "'Sora', system-ui, sans-serif",
+          fontSize: 'clamp(28px, 5vw, 52px)',
+          fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1,
+          color: '#ffffff', margin: '0 0 16px',
+        }}>
+          No contracts. No commissions.<br />Just growth.
+        </h2>
+        <p style={{
+          fontSize: '17px', color: 'rgba(255,255,255,0.5)',
+          lineHeight: 1.65, maxWidth: '440px', margin: '0 auto 36px',
+        }}>
+          Flat monthly pricing — you keep 100% of every booking. Scale up or cancel anytime.
+        </p>
+        <button
+          onClick={onTrialClick}
+          className="grad-btn"
+          style={{
+            height: '52px', padding: '0 36px', borderRadius: '12px',
+            fontSize: '16px', fontWeight: 600,
+          }}
+        >
+          Start free trial →
+        </button>
+      </div>
+    </section>
+  )
+}
+
+// ── Dark CTA (pre-footer) ─────────────────────────────────────────────────────
+
+function DarkCTA({ onTrialClick }: { onTrialClick: () => void }) {
+  return (
+    <section style={{
+      background: '#111',
+      padding: '100px 24px',
+      textAlign: 'center',
+    }}>
+      <div style={{ maxWidth: '680px', margin: '0 auto' }}>
+        <h2 style={{
+          fontFamily: "'Sora', system-ui, sans-serif",
+          fontSize: 'clamp(32px, 5.5vw, 60px)',
+          fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05,
+          color: '#ffffff', margin: '0 0 20px',
+        }}>
+          Ready to fill your calendar?
+        </h2>
+        <p style={{
+          fontSize: '18px', color: 'rgba(255,255,255,0.45)',
+          lineHeight: 1.65, maxWidth: '420px', margin: '0 auto 44px',
+        }}>
+          Join hundreds of businesses already using Lumentry to save time and grow their bookings.
+        </p>
+        <div style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <button
+            onClick={onTrialClick}
+            className="grad-btn"
+            style={{
+              height: '54px', padding: '0 36px', borderRadius: '12px',
+              fontSize: '16px', fontWeight: 600,
+            }}
+          >
+            Start free trial →
+          </button>
+          <a href="mailto:hello@lumentry.io" style={{ textDecoration: 'none' }}>
+            <button
+              className="ghost-btn"
+              style={{
+                height: '54px', padding: '0 32px', borderRadius: '12px',
+                fontSize: '16px', fontWeight: 600,
+              }}
+            >
+              Book a demo
+            </button>
+          </a>
+        </div>
+        <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.25)', marginTop: '24px' }}>
+          No credit card required · 1 month free · Cancel anytime
+        </p>
+      </div>
+    </section>
   )
 }
 
@@ -237,69 +390,12 @@ function MockScreen() {
         </div>
       </div>
 
-      {/* App UI */}
-      <div style={{ background: '#fff' }}>
-        {/* Top strip */}
-        <div style={{
-          borderBottom: '1px solid #f0f0f5', padding: '12px 20px',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <div style={{ width: '20px', height: '20px', background: '#1a1a2e', borderRadius: '4px' }} />
-            <div style={{ height: '10px', width: '90px', background: '#e5e5ea', borderRadius: '3px' }} />
-          </div>
-          <div style={{ height: '28px', width: '110px', background: '#1a1a2e', borderRadius: '8px' }} />
-        </div>
-
-        {/* Main content */}
-        <div style={{ padding: '20px', display: 'flex', gap: '20px' }}>
-          {/* Calendar */}
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ marginBottom: '14px' }}>
-              <div style={{ height: '13px', width: '55%', background: '#1a1a2e', borderRadius: '3px', marginBottom: '7px' }} />
-              <div style={{ height: '10px', width: '38%', background: '#e5e5ea', borderRadius: '3px' }} />
-            </div>
-            <div style={{ background: '#fafafa', borderRadius: '12px', border: '1px solid #f0f0f5', padding: '14px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                <div style={{ height: '10px', width: '80px', background: '#1a1a2e', borderRadius: '3px' }} />
-                <div style={{ display: 'flex', gap: '4px' }}>
-                  <div style={{ width: '20px', height: '20px', background: '#e5e5ea', borderRadius: '4px' }} />
-                  <div style={{ width: '20px', height: '20px', background: '#e5e5ea', borderRadius: '4px' }} />
-                </div>
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '3px', marginBottom: '5px' }}>
-                {['M','T','W','T','F','S','S'].map((d, i) => (
-                  <div key={i} style={{ textAlign: 'center', fontSize: '9px', color: '#86868b', fontWeight: 700 }}>{d}</div>
-                ))}
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '3px' }}>
-                {Array.from({ length: 35 }).map((_, i) => (
-                  <div key={i} style={{
-                    height: '22px', borderRadius: '5px',
-                    background: i === 15 ? '#1a1a2e' : i === 8 ? '#f0eeff' : '#fff',
-                    border: `1px solid ${i === 15 ? '#1a1a2e' : '#f0f0f5'}`,
-                    opacity: i < 2 ? 0.3 : 1,
-                  }} />
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Time slots */}
-          <div style={{ width: '120px', flexShrink: 0 }}>
-            <div style={{ height: '10px', width: '70%', background: '#e5e5ea', borderRadius: '3px', marginBottom: '14px', marginTop: '2px' }} />
-            {['09:00','10:00','11:00','12:00','14:00','15:00'].map((t, i) => (
-              <div key={t} style={{
-                padding: '7px 10px', borderRadius: '8px', marginBottom: '6px',
-                background: i === 1 ? '#1a1a2e' : '#fafafa',
-                border: `1px solid ${i === 1 ? '#1a1a2e' : '#e5e5ea'}`,
-                fontSize: '11px', fontWeight: 600,
-                color: i === 1 ? '#fff' : '#374151',
-              }}>{t}</div>
-            ))}
-          </div>
-        </div>
-      </div>
+      {/* App UI — real photo */}
+      <img
+        src={IMG_HERO_MOCKUP}
+        alt="Lumentry booking dashboard"
+        style={{ width: '100%', display: 'block', maxHeight: '420px', objectFit: 'cover', objectPosition: 'top' }}
+      />
     </div>
   )
 }
@@ -487,15 +583,15 @@ function FeaturesGrid() {
           gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
           gap: '20px',
         }}>
-          {FEATURE_HIGHLIGHTS.map(f => (
+          {FEATURE_HIGHLIGHTS.map((f, i) => (
             <div key={f.title} className="feature-card">
               <div style={{
                 width: '48px', height: '48px', borderRadius: '12px',
                 background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.15)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '22px', marginBottom: '20px',
+                marginBottom: '20px',
               }}>
-                {f.icon}
+                {FEATURE_ICONS[i]}
               </div>
               <h3 style={{
                 fontFamily: "'Sora', system-ui, sans-serif",
@@ -512,23 +608,26 @@ function FeaturesGrid() {
 
 // ── How It Works ──────────────────────────────────────────────────────────────
 
+const STEP_IMAGES = [IMG_STEP_1, IMG_STEP_2, IMG_STEP_3]
+const STEP_ALTS = [
+  'Sign up and onboard in minutes',
+  'Set up your services and availability',
+  'Start taking bookings instantly',
+]
+
 function StepImage({ index }: { index: number }) {
-  const bgs = [
-    'linear-gradient(135deg, #f0eeff 0%, #e8f4ff 100%)',
-    'linear-gradient(135deg, #fdf0ff 0%, #f0eeff 100%)',
-    'linear-gradient(135deg, #f0fff8 0%, #e8f4ff 100%)',
-  ]
-  const icons = ['📅', '⚙️', '🚀']
   return (
     <div style={{
-      width: '100%', aspectRatio: '4/3',
-      background: bgs[index], borderRadius: '20px',
+      width: '100%', borderRadius: '20px',
+      overflow: 'hidden',
       border: '1px solid #e5e5ea',
-      display: 'flex', flexDirection: 'column',
-      alignItems: 'center', justifyContent: 'center', gap: '12px',
+      boxShadow: '0 12px 40px rgba(26,26,46,0.10)',
     }}>
-      <span style={{ fontSize: '52px' }}>{icons[index]}</span>
-      <p style={{ fontSize: '13px', color: '#9ca3af', margin: 0 }}>Screenshot coming soon</p>
+      <img
+        src={STEP_IMAGES[index]}
+        alt={STEP_ALTS[index]}
+        style={{ width: '100%', display: 'block', aspectRatio: '4/3', objectFit: 'cover' }}
+      />
     </div>
   )
 }
@@ -1182,10 +1281,13 @@ export default function App() {
       <Navbar onTrialClick={() => openTrial()} />
       <main>
         <Hero onTrialClick={() => openTrial()} />
+        <StatsBand />
         <IndustryStrip />
         <FeaturesGrid />
+        <DarkBand onTrialClick={() => openTrial()} />
         <HowItWorks />
         <Pricing onTrialClick={openTrial} />
+        <DarkCTA onTrialClick={() => openTrial()} />
       </main>
       <Footer />
       <TrialModal
