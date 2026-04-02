@@ -905,14 +905,6 @@ function HowItWorks() {
 
 // ── Pricing ───────────────────────────────────────────────────────────────────
 
-const FREE_BADGE = (
-  <span style={{
-    fontSize: '11px', fontWeight: 700, padding: '3px 10px',
-    background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)',
-    borderRadius: '999px', color: '#6366f1',
-  }}>1 month free</span>
-)
-
 function PricingCard({
   plan, price, tagline, features, featured, note, onTrialClick,
 }: {
@@ -924,58 +916,99 @@ function PricingCard({
   note?: string
   onTrialClick: (plan: Plan) => void
 }) {
-  const label = plan === 'pro' ? 'Pro' : plan === 'business' ? 'Business' : 'Enterprise'
+  const label = plan === 'pro' ? 'PRO' : plan === 'business' ? 'BUSINESS' : 'ENTERPRISE'
+  const isEnterprise = plan === 'enterprise'
+
+  if (featured) {
+    return (
+      <div
+        style={{
+          background: '#0d0d1a',
+          border: '2px solid rgba(99,102,241,0.25)',
+          borderRadius: '24px',
+          padding: '48px 36px',
+          position: 'relative',
+          overflow: 'hidden',
+          display: 'flex', flexDirection: 'column',
+          boxShadow: '0 0 60px rgba(99,102,241,0.2)',
+          transition: 'transform 0.2s',
+          zIndex: 1,
+        }}
+        onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.01)')}
+        onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
+      >
+        {/* Purple accent bar */}
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: '#6366f1', borderRadius: '22px 22px 0 0' }} />
+
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+          <span style={{ fontSize: '12px', fontWeight: 700, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{label}</span>
+          <span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 10px', background: '#6366f1', borderRadius: '999px', color: '#fff' }}>1 month free</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginBottom: '4px' }}>
+          <span style={{ fontFamily: "'Sora', system-ui, sans-serif", fontSize: '72px', fontWeight: 900, color: '#fff', lineHeight: 1, letterSpacing: '-0.04em' }}>{price}</span>
+          <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.35)' }}>/mo + VAT</span>
+        </div>
+        <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', margin: '0 0 28px' }}>{tagline}</p>
+
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '32px' }}>
+          {features.map(f => (
+            <div key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+              <CheckIcon />
+              <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.8)' }}>{f}</span>
+            </div>
+          ))}
+        </div>
+
+        <button
+          onClick={() => onTrialClick(plan)}
+          style={{
+            width: '100%', height: '52px', borderRadius: '999px',
+            background: '#fff', color: '#0d0d1a',
+            border: 'none', fontSize: '15px', fontWeight: 700,
+            cursor: 'pointer', fontFamily: "'DM Sans', sans-serif",
+            transition: 'opacity 0.2s',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.opacity = '0.9')}
+          onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+        >
+          Start free trial
+        </button>
+      </div>
+    )
+  }
 
   return (
-    <div className={`pricing-card${featured ? ' featured' : ''}`} style={{
-      display: 'flex', flexDirection: 'column',
-      transform: featured ? 'scale(1.03)' : 'scale(1)',
-      zIndex: featured ? 1 : 0,
-    }}>
-      {/* Gradient top accent for Business */}
-      {featured && (
-        <div style={{
-          position: 'absolute', top: 0, left: 0, right: 0, height: '3px',
-          background: 'linear-gradient(90deg, #6366f1, #8b5cf6)',
-          borderRadius: '18px 18px 0 0',
-        }} />
-      )}
+    <div
+      style={{
+        background: '#fff',
+        border: '1.5px solid #e5e5ea',
+        borderRadius: '24px',
+        padding: '36px',
+        position: 'relative',
+        overflow: 'hidden',
+        display: 'flex', flexDirection: 'column',
+        transition: 'transform 0.2s, box-shadow 0.2s',
+      }}
+      onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.01)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.08)' }}
+      onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = 'none' }}
+    >
+      {/* Top accent bar */}
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: isEnterprise ? '#6366f1' : '#e5e5ea', borderRadius: '22px 22px 0 0' }} />
 
-      {/* Most Popular badge */}
-      {featured && (
-        <div style={{
-          position: 'absolute', top: '-14px', left: '50%', transform: 'translateX(-50%)',
-          background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-          color: '#fff', fontSize: '11px', fontWeight: 800,
-          padding: '4px 16px', borderRadius: '999px',
-          letterSpacing: '0.06em', textTransform: 'uppercase', whiteSpace: 'nowrap',
-          boxShadow: '0 4px 16px rgba(99,102,241,0.35)',
-        }}>
-          Most Popular
-        </div>
-      )}
-
-      <div style={{ marginBottom: '24px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-          <span style={{
-            fontSize: '13px', fontWeight: 700,
-            color: '#9ca3af', letterSpacing: '0.08em', textTransform: 'uppercase',
-          }}>{label}</span>
-          {FREE_BADGE}
-        </div>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
-          <span style={{
-            fontFamily: "'Sora', system-ui, sans-serif",
-            fontSize: featured ? '58px' : '50px',
-            fontWeight: 800, color: '#1a1a2e', lineHeight: 1,
-            letterSpacing: '-0.03em',
-          }}>{price}</span>
-          <span style={{ fontSize: '14px', color: '#9ca3af' }}>/mo + VAT</span>
-        </div>
-        <p style={{ fontSize: '13px', color: '#9ca3af', margin: '6px 0 0' }}>{tagline}</p>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+        <span style={{ fontSize: '12px', fontWeight: 700, color: '#9ca3af', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{label}</span>
+        {isEnterprise
+          ? <span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 10px', border: '1px solid #6366f1', borderRadius: '999px', color: '#6366f1', background: 'transparent' }}>1 month free</span>
+          : <span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 10px', background: '#f0f0f5', borderRadius: '999px', color: '#374151' }}>1 month free</span>
+        }
       </div>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginBottom: '4px' }}>
+        <span style={{ fontFamily: "'Sora', system-ui, sans-serif", fontSize: '64px', fontWeight: 900, color: '#0d0d1a', lineHeight: 1, letterSpacing: '-0.04em' }}>{price}</span>
+        <span style={{ fontSize: '14px', color: '#9ca3af' }}>/mo + VAT</span>
+      </div>
+      <p style={{ fontSize: '13px', color: '#9ca3af', margin: '0 0 28px' }}>{tagline}</p>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: note ? '16px' : '32px', flex: 1 }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: note ? '12px' : '32px' }}>
         {features.map(f => (
           <div key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
             <CheckIcon />
@@ -983,25 +1016,19 @@ function PricingCard({
           </div>
         ))}
       </div>
-      {note && (
-        <p style={{ fontSize: '12px', color: '#9ca3af', margin: '0 0 20px', fontStyle: 'italic' }}>{note}</p>
-      )}
+      {note && <p style={{ fontSize: '12px', color: '#9ca3af', margin: '0 0 20px', fontStyle: 'italic' }}>{note}</p>}
 
       <button
         onClick={() => onTrialClick(plan)}
         style={{
-          width: '100%',
-          height: featured ? '52px' : '46px',
-          borderRadius: '12px',
-          fontSize: '15px', fontWeight: 600,
+          width: '100%', height: '52px', borderRadius: '999px',
+          background: 'transparent', color: '#0d0d1a',
+          border: '1.5px solid #0d0d1a', fontSize: '15px', fontWeight: 700,
           cursor: 'pointer', fontFamily: "'DM Sans', sans-serif",
-          border: featured ? 'none' : '1.5px solid #1a1a2e',
-          background: featured ? '#1a1a2e' : 'transparent',
-          color: featured ? '#fff' : '#1a1a2e',
-          transition: 'opacity 0.2s, transform 0.15s',
+          transition: 'opacity 0.2s',
         }}
-        onMouseEnter={e => { e.currentTarget.style.opacity = '0.85'; e.currentTarget.style.transform = 'translateY(-1px)' }}
-        onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)' }}
+        onMouseEnter={e => (e.currentTarget.style.opacity = '0.7')}
+        onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
       >
         Start free trial
       </button>
@@ -1013,7 +1040,7 @@ function Pricing({ onTrialClick }: { onTrialClick: (plan?: Plan) => void }) {
   const handleClick = (plan: Plan) => onTrialClick(plan)
 
   return (
-    <section id="pricing" style={{ padding: '100px 24px', background: '#fff' }}>
+    <section id="pricing" style={{ padding: '100px 24px', background: '#f5f5f7' }}>
       <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: '72px' }}>
           <p style={{
@@ -1024,55 +1051,41 @@ function Pricing({ onTrialClick }: { onTrialClick: (plan?: Plan) => void }) {
           </p>
           <h2 style={{
             fontFamily: "'Sora', system-ui, sans-serif",
-            fontSize: 'clamp(30px, 4vw, 48px)',
-            fontWeight: 700, letterSpacing: '-0.025em',
-            color: '#1a1a2e', margin: '0 0 16px',
+            fontSize: 'clamp(40px, 6vw, 64px)',
+            fontWeight: 900, letterSpacing: '-0.035em', lineHeight: 1.05,
+            margin: '0 0 16px',
           }}>
-            Start free. Grow fast.
+            <span style={{ color: '#0d0d1a' }}>Start free. </span>
+            <span style={{ color: '#6366f1' }}>Grow fast.</span>
           </h2>
-          <p style={{ fontSize: '17px', color: '#6b7280', maxWidth: '400px', margin: '0 auto', lineHeight: 1.65 }}>
+          <p style={{ fontSize: '18px', color: '#666', maxWidth: '500px', margin: '0 auto', lineHeight: 1.65 }}>
             One month free on every plan. No credit card required.
           </p>
         </div>
 
         <div
+          className="pricing-grid"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '20px',
-            alignItems: 'center',
-            paddingTop: '18px',
+            gap: '24px',
+            alignItems: 'start',
           }}
-          className="pricing-grid"
         >
-          <PricingCard
-            plan="pro"
-            price="£29"
-            tagline="Perfect for getting started"
-            features={PRO_FEATURES}
-            onTrialClick={handleClick}
-          />
-          <PricingCard
-            plan="business"
-            price="£50"
-            tagline="For venues that need access control"
-            features={BUSINESS_FEATURES}
-            featured
-            onTrialClick={handleClick}
-          />
-          <PricingCard
-            plan="enterprise"
-            price="£79"
-            tagline="Full power for growing businesses"
-            features={ENTERPRISE_FEATURES}
-            note="Need more? Contact us for a bespoke package"
-            onTrialClick={handleClick}
-          />
+          <PricingCard plan="pro" price="£29" tagline="Perfect for getting started" features={PRO_FEATURES} onTrialClick={handleClick} />
+          <PricingCard plan="business" price="£50" tagline="For venues that need access control" features={BUSINESS_FEATURES} featured onTrialClick={handleClick} />
+          <PricingCard plan="enterprise" price="£79" tagline="Full power for growing businesses" features={ENTERPRISE_FEATURES} note="Need more? Contact us for a bespoke package" onTrialClick={handleClick} />
         </div>
 
-        <p style={{ textAlign: 'center', fontSize: '13px', color: '#9ca3af', marginTop: '36px' }}>
-          No credit card required · Cancel anytime · All prices exclude VAT
-        </p>
+        <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '40px' }}>
+          {['No credit card required', 'Cancel anytime', 'All prices exclude VAT'].map(badge => (
+            <span key={badge} style={{
+              fontSize: '12px', fontWeight: 500, color: '#6b7280',
+              padding: '5px 14px', background: '#e8e8ed',
+              borderRadius: '999px',
+            }}>{badge}</span>
+          ))}
+        </div>
       </div>
     </section>
   )
