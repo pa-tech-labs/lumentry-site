@@ -1,17 +1,37 @@
 // Replace these URLs with your own images before launching
 
-export const IMG_HERO_MOCKUP =
-  'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1280&q=80'
-// Subject: MacBook on clean desk — replace with a screenshot of the Lumentry booking portal
+// ── Hero grid ─────────────────────────────────────────────────────────────────
+
+export const IMG_GRID_1 =
+  'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=800&q=80'
+// Row 1 left (tall, portrait) — recording studio / venue environment
+
+export const IMG_GRID_2 =
+  'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80'
+// Row 1 right (tall) — dark analytics/dashboard on screen
+
+export const IMG_GRID_3 =
+  'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=600&q=80'
+// Row 2 left — phone in hand / booking confirmation
+
+export const IMG_GRID_4 =
+  'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80'
+// Row 2 middle — studio / workspace lifestyle
+
+export const IMG_GRID_5 =
+  'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80'
+// Row 2 right — business owner smiling at laptop
+
+// ── How it works ──────────────────────────────────────────────────────────────
 
 export const IMG_STEP_1 =
   'https://images.unsplash.com/photo-1555421689-d68471e189f2?auto=format&fit=crop&w=900&q=80'
-// Subject: Person at laptop signing up — replace with Lumentry onboarding screenshot
+// Sign up — person at laptop onboarding
 
 export const IMG_STEP_2 =
   'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80'
-// Subject: Dashboard / settings — replace with Lumentry services/availability screenshot
+// Set up services — dashboard / settings view
 
 export const IMG_STEP_3 =
   'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=900&q=80'
-// Subject: Person on phone / booking confirmation — replace with live booking page screenshot
+// Start taking bookings — booking confirmation on phone

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { IMG_HERO_MOCKUP, IMG_STEP_1, IMG_STEP_2, IMG_STEP_3 } from './config/images'
+import { IMG_GRID_1, IMG_GRID_2, IMG_GRID_3, IMG_GRID_4, IMG_GRID_5, IMG_STEP_1, IMG_STEP_2, IMG_STEP_3 } from './config/images'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -360,43 +360,67 @@ function Navbar({ onTrialClick }: { onTrialClick: () => void }) {
   )
 }
 
-// ── Mock Screen ───────────────────────────────────────────────────────────────
+// ── Hero Grid ─────────────────────────────────────────────────────────────────
 
-function MockScreen() {
+function HeroGrid() {
   return (
-    <div style={{
-      width: '100%', maxWidth: '680px', margin: '56px auto 0',
-      borderRadius: '16px', overflow: 'hidden',
-      border: '1px solid #e5e5ea',
-      boxShadow: '0 32px 80px rgba(26,26,46,0.12), 0 4px 16px rgba(0,0,0,0.05)',
-      animation: 'slideUp 1s ease 0.2s both',
-    }}>
-      {/* Browser chrome */}
+    <>
+      <style>{`
+        @media (max-width: 640px) {
+          .hero-grid-row1 { flex-direction: column !important; }
+          .hero-grid-row1 > div { height: 260px !important; flex: none !important; width: 100% !important; }
+          .hero-grid-row2 { display: none !important; }
+        }
+      `}</style>
       <div style={{
-        background: '#f5f5f7', borderBottom: '1px solid #e5e5ea',
-        padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '12px',
+        maxWidth: '860px', margin: '52px auto 0',
+        display: 'flex', flexDirection: 'column', gap: '8px',
+        animation: 'slideUp 1s ease 0.2s both',
       }}>
-        <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
-          {['#ff5f57','#febc2e','#28c840'].map(c => (
-            <div key={c} style={{ width: '11px', height: '11px', borderRadius: '50%', background: c }} />
-          ))}
+        {/* Row 1: 60/40 split */}
+        <div className="hero-grid-row1" style={{ display: 'flex', gap: '8px' }}>
+          <div style={{ flex: '0 0 60%', height: '380px', borderRadius: '12px', overflow: 'hidden' }}>
+            <img
+              src={IMG_GRID_1}
+              alt="Studio environment"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+          </div>
+          <div style={{ flex: 1, height: '380px', borderRadius: '12px', overflow: 'hidden' }}>
+            <img
+              src={IMG_GRID_2}
+              alt="Booking dashboard"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+          </div>
         </div>
-        <div style={{
-          flex: 1, height: '26px', background: '#fff', borderRadius: '6px',
-          border: '1px solid #e5e5ea', display: 'flex', alignItems: 'center',
-          justifyContent: 'center', fontSize: '11px', color: '#86868b', fontWeight: 500,
-        }}>
-          book.yourbusiness.com
+
+        {/* Row 2: 3 equal columns */}
+        <div className="hero-grid-row2" style={{ display: 'flex', gap: '8px' }}>
+          <div style={{ flex: 1, height: '220px', borderRadius: '12px', overflow: 'hidden' }}>
+            <img
+              src={IMG_GRID_3}
+              alt="Mobile booking"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+          </div>
+          <div style={{ flex: 1, height: '220px', borderRadius: '12px', overflow: 'hidden' }}>
+            <img
+              src={IMG_GRID_4}
+              alt="Workspace lifestyle"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+          </div>
+          <div style={{ flex: 1, height: '220px', borderRadius: '12px', overflow: 'hidden' }}>
+            <img
+              src={IMG_GRID_5}
+              alt="Business owner at laptop"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+          </div>
         </div>
       </div>
-
-      {/* App UI — real photo */}
-      <img
-        src={IMG_HERO_MOCKUP}
-        alt="Lumentry booking dashboard"
-        style={{ width: '100%', display: 'block', maxHeight: '420px', objectFit: 'cover', objectPosition: 'top' }}
-      />
-    </div>
+    </>
   )
 }
 
@@ -504,10 +528,7 @@ function Hero({ onTrialClick }: { onTrialClick: () => void }) {
         </p>
       </div>
 
-      {/* Mock screen */}
-      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-        <MockScreen />
-      </div>
+      <HeroGrid />
     </section>
   )
 }
