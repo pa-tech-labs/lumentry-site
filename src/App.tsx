@@ -367,55 +367,61 @@ function HeroGrid() {
     <>
       <style>{`
         @media (max-width: 640px) {
+          .hero-grid-wrap { padding: 0 16px !important; }
           .hero-grid-row1 { flex-direction: column !important; }
           .hero-grid-row1 > div { height: 260px !important; flex: none !important; width: 100% !important; }
-          .hero-grid-row2 { display: none !important; }
+          .hero-grid-row2 > div:not(:first-child) { display: none !important; }
+          .hero-grid-row2 > div:first-child { flex: none !important; width: 100% !important; }
         }
       `}</style>
-      <div style={{
-        maxWidth: '860px', margin: '52px auto 0',
-        display: 'flex', flexDirection: 'column', gap: '8px',
-        animation: 'slideUp 1s ease 0.2s both',
-      }}>
-        {/* Row 1: 60/40 split */}
-        <div className="hero-grid-row1" style={{ display: 'flex', gap: '8px' }}>
-          <div style={{ flex: '0 0 60%', height: '380px', borderRadius: '12px', overflow: 'hidden' }}>
+      <div
+        className="hero-grid-wrap"
+        style={{
+          maxWidth: '1100px', margin: '52px auto 0',
+          padding: '0 40px',
+          display: 'flex', flexDirection: 'column', gap: '12px',
+          animation: 'slideUp 1s ease 0.2s both',
+        }}
+      >
+        {/* Row 1: 55/45 split */}
+        <div className="hero-grid-row1" style={{ display: 'flex', gap: '12px' }}>
+          <div style={{ flex: '0 0 55%', height: '400px', borderRadius: '16px', overflow: 'hidden' }}>
             <img
               src={IMG_GRID_1}
               alt="Studio environment"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
             />
           </div>
-          <div style={{ flex: 1, height: '380px', borderRadius: '12px', overflow: 'hidden' }}>
+          <div style={{ flex: 1, height: '400px', borderRadius: '16px', overflow: 'hidden' }}>
             <img
               src={IMG_GRID_2}
               alt="Booking dashboard"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
             />
           </div>
         </div>
 
         {/* Row 2: 3 equal columns */}
-        <div className="hero-grid-row2" style={{ display: 'flex', gap: '8px' }}>
-          <div style={{ flex: 1, height: '220px', borderRadius: '12px', overflow: 'hidden' }}>
+        <div className="hero-grid-row2" style={{ display: 'flex', gap: '12px' }}>
+          <div style={{ flex: 1, height: '240px', borderRadius: '16px', overflow: 'hidden' }}>
             <img
               src={IMG_GRID_3}
               alt="Mobile booking"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
             />
           </div>
-          <div style={{ flex: 1, height: '220px', borderRadius: '12px', overflow: 'hidden' }}>
+          <div style={{ flex: 1, height: '240px', borderRadius: '16px', overflow: 'hidden' }}>
             <img
               src={IMG_GRID_4}
               alt="Workspace lifestyle"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
             />
           </div>
-          <div style={{ flex: 1, height: '220px', borderRadius: '12px', overflow: 'hidden' }}>
+          <div style={{ flex: 1, height: '240px', borderRadius: '16px', overflow: 'hidden' }}>
             <img
               src={IMG_GRID_5}
               alt="Business owner at laptop"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
             />
           </div>
         </div>
