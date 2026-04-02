@@ -20,37 +20,69 @@ const FEATURE_HIGHLIGHTS = [
   {
     title: 'Smart Booking',
     desc: 'A beautiful, branded booking page your clients can use 24/7 — from any device, no app required.',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+        <line x1="16" y1="2" x2="16" y2="6" />
+        <line x1="8" y1="2" x2="8" y2="6" />
+        <line x1="3" y1="10" x2="21" y2="10" />
+      </svg>
+    ),
   },
   {
     title: 'Client Management',
     desc: 'Track visits, spending, and loyalty. Know exactly who your best clients are and keep them coming back.',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+        <circle cx="9" cy="7" r="4" />
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+      </svg>
+    ),
   },
   {
     title: 'Marketing Tools',
     desc: 'Send targeted email and SMS campaigns, run promo codes, and automate win-back messages with ease.',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M22 2L11 13" />
+        <path d="M22 2L15 22l-4-9-9-4 20-7z" />
+      </svg>
+    ),
   },
-]
-
-const FEATURE_ICONS = [
-  // Calendar icon
-  <svg key="cal" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-    <line x1="16" y1="2" x2="16" y2="6" />
-    <line x1="8" y1="2" x2="8" y2="6" />
-    <line x1="3" y1="10" x2="21" y2="10" />
-  </svg>,
-  // Users icon
-  <svg key="usr" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-    <circle cx="9" cy="7" r="4" />
-    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-  </svg>,
-  // Send/Megaphone icon
-  <svg key="mkt" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M22 2L11 13" />
-    <path d="M22 2L15 22l-4-9-9-4 20-7z" />
-  </svg>,
+  {
+    title: 'Smart Lock Access',
+    desc: 'Automated door codes sent the moment a booking is confirmed. No keys, no fuss — just seamless entry.',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        <circle cx="12" cy="16" r="1" fill="#6366f1" stroke="none" />
+      </svg>
+    ),
+  },
+  {
+    title: 'Analytics & Insights',
+    desc: 'See your busiest times, top-spending clients, and revenue trends — all from one clean dashboard.',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="18" y1="20" x2="18" y2="10" />
+        <line x1="12" y1="20" x2="12" y2="4" />
+        <line x1="6" y1="20" x2="6" y2="14" />
+      </svg>
+    ),
+  },
+  {
+    title: 'Promo Codes & Loyalty',
+    desc: 'Create discount codes, reward loyal clients, and run referral campaigns to keep your calendar full.',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+        <line x1="7" y1="7" x2="7.01" y2="7" strokeWidth="3" strokeLinecap="round" />
+      </svg>
+    ),
+  },
 ]
 
 
@@ -686,53 +718,78 @@ function AlternatingRows() {
 
 function FeaturesGrid() {
   return (
-    <section id="features" style={{ padding: '100px 24px', background: '#fff' }}>
-      <div style={{ maxWidth: '1060px', margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-          <p style={{
-            fontSize: '12px', fontWeight: 700, color: '#6366f1',
-            letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '14px',
-          }}>
-            Everything you need
-          </p>
-          <h2 style={{
-            fontFamily: "'Sora', system-ui, sans-serif",
-            fontSize: 'clamp(30px, 4vw, 48px)',
-            fontWeight: 700, letterSpacing: '-0.025em',
-            color: '#1a1a2e', margin: '0 0 16px',
-          }}>
-            Everything your business needs
-          </h2>
-          <p style={{ fontSize: '17px', color: '#6b7280', maxWidth: '480px', margin: '0 auto', lineHeight: 1.65 }}>
-            One platform to run bookings, manage clients, and grow your revenue — no extra tools needed.
-          </p>
-        </div>
+    <>
+      <style>{`
+        .feat-card {
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.10);
+          border-radius: 20px;
+          padding: 32px;
+          transition: background 0.2s, border-color 0.2s;
+        }
+        .feat-card:hover {
+          background: rgba(255,255,255,0.09);
+          border-color: rgba(255,255,255,0.18);
+        }
+        @media (max-width: 640px) {
+          .feat-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+      <section id="features" style={{
+        padding: '100px 24px',
+        background: '#0d0d1a',
+        backgroundImage: 'radial-gradient(ellipse at 50% 40%, #1a1a3e 0%, #0d0d1a 65%)',
+      }}>
+        <div style={{ maxWidth: '1060px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+            <p style={{
+              fontSize: '12px', fontWeight: 700, color: '#6366f1',
+              letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '14px',
+            }}>
+              Everything you need
+            </p>
+            <h2 style={{
+              fontFamily: "'Sora', system-ui, sans-serif",
+              fontSize: 'clamp(30px, 4vw, 48px)',
+              fontWeight: 700, letterSpacing: '-0.025em',
+              color: '#ffffff', margin: '0 0 16px',
+            }}>
+              Everything your business needs
+            </h2>
+            <p style={{ fontSize: '17px', color: '#aaa', maxWidth: '480px', margin: '0 auto', lineHeight: 1.65 }}>
+              One platform to run bookings, manage clients, and grow your revenue — no extra tools needed.
+            </p>
+          </div>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '20px',
-        }}>
-          {FEATURE_HIGHLIGHTS.map((f, i) => (
-            <div key={f.title} className="feature-card">
-              <div style={{
-                width: '48px', height: '48px', borderRadius: '12px',
-                background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.15)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                marginBottom: '20px',
-              }}>
-                {FEATURE_ICONS[i]}
+          <div
+            className="feat-grid"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: '20px',
+            }}
+          >
+            {FEATURE_HIGHLIGHTS.map(f => (
+              <div key={f.title} className="feat-card">
+                <div style={{
+                  width: '48px', height: '48px', borderRadius: '12px',
+                  background: 'rgba(99,102,241,0.15)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  marginBottom: '20px',
+                }}>
+                  {f.icon}
+                </div>
+                <h3 style={{
+                  fontFamily: "'Sora', system-ui, sans-serif",
+                  fontSize: '18px', fontWeight: 700, color: '#fff', margin: '0 0 10px',
+                }}>{f.title}</h3>
+                <p style={{ fontSize: '15px', color: '#999', margin: 0, lineHeight: 1.6 }}>{f.desc}</p>
               </div>
-              <h3 style={{
-                fontFamily: "'Sora', system-ui, sans-serif",
-                fontSize: '18px', fontWeight: 700, color: '#1a1a2e', margin: '0 0 10px',
-              }}>{f.title}</h3>
-              <p style={{ fontSize: '14px', color: '#6b7280', margin: 0, lineHeight: 1.65 }}>{f.desc}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }
 
