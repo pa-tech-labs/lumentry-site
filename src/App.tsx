@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { IMG_GRID_1, IMG_GRID_2, IMG_GRID_3, IMG_GRID_4, IMG_GRID_5, IMG_ALT_1, IMG_ALT_2, IMG_ALT_3, IMG_ALT_4, IMG_STEP_1, IMG_STEP_2, IMG_STEP_3 } from './config/images'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -1273,13 +1274,17 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  // Sync initialPlan when modal opens
+  // Sync initialPlan when modal opens + body scroll lock
   useEffect(() => {
     if (open) {
       setStep(1)
       setError(null)
       setForm(f => ({ ...f, plan: initialPlan }))
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
     }
+    return () => { document.body.style.overflow = '' }
   }, [open, initialPlan])
 
   const overlayRef = useRef<HTMLDivElement>(null)
@@ -1342,11 +1347,12 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
     enterprise: { price: '£79/mo', features: ENTERPRISE_FEATURES.slice(0, 5) },
   }
 
-  return (
+  return createPortal(
     <div
+      className="tm-overlay"
       ref={overlayRef}
       style={{
-        position: 'fixed', inset: 0, zIndex: 200,
+        position: 'fixed', inset: 0, zIndex: 9999,
         background: 'rgba(0,0,0,0.85)',
         backdropFilter: 'blur(12px)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -1355,13 +1361,20 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
       }}
       onClick={step === 1 ? (e => { if (e.target === overlayRef.current) onClose() }) : undefined}
     >
-      <div style={{
+      <style>{`
+        .tm-modal   { max-height: 90vh; max-height: 90svh; overflow-y: auto; }
+        @media (max-width: 640px) {
+          .tm-overlay { align-items: flex-end !important; padding: 0 !important; }
+          .tm-modal   { border-radius: 20px 20px 0 0 !important; max-width: 100% !important; max-height: 92svh !important; max-height: 92vh !important; }
+          .tm-plan-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+      <div className="tm-modal" style={{
         background: '#111',
         border: '1px solid rgba(255,255,255,0.1)',
         borderRadius: '20px',
         width: '100%',
         maxWidth: step === 2 ? '940px' : '480px',
-        overflow: 'hidden',
         boxShadow: '0 32px 80px rgba(0,0,0,0.6)',
         transition: 'max-width 0.3s ease',
       }}>
@@ -1475,7 +1488,7 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
           {/* Step 2 */}
           {step === 2 && (
             <div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px' }}>
+              <div className="tm-plan-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px' }}>
                 {(['pro', 'business', 'enterprise'] as Plan[]).map(plan => {
                   const { price, features } = planDetails[plan]
                   const isFeatured = plan === 'business'
@@ -1560,7 +1573,8 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
 
