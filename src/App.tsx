@@ -938,7 +938,6 @@ function PricingCard({
       >
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
           <span style={{ fontSize: '12px', fontWeight: 700, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{label}</span>
-          <span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 10px', background: '#6366f1', borderRadius: '999px', color: '#fff' }}>1 month free</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginBottom: '4px' }}>
           <span style={{ fontFamily: "'Sora', system-ui, sans-serif", fontSize: '72px', fontWeight: 900, color: '#fff', lineHeight: 1, letterSpacing: '-0.04em' }}>{price}</span>
@@ -988,13 +987,15 @@ function PricingCard({
       onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.01)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.08)' }}
       onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = 'none' }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: isEnterprise ? '6px' : '10px' }}>
         <span style={{ fontSize: '12px', fontWeight: 700, color: '#9ca3af', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{label}</span>
-        {isEnterprise
-          ? <span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 10px', border: '1px solid #6366f1', borderRadius: '999px', color: '#6366f1', background: 'transparent' }}>1 month free</span>
-          : <span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 10px', background: '#f0f0f5', borderRadius: '999px', color: '#374151' }}>1 month free</span>
-        }
+        {isEnterprise && (
+          <span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 10px', background: '#dcfce7', borderRadius: '999px', color: '#15803d', border: '1px solid #bbf7d0' }}>1 month free</span>
+        )}
       </div>
+      {isEnterprise && (
+        <p style={{ fontSize: '12px', color: '#6b7280', margin: '0 0 8px', fontStyle: 'italic' }}>Start here — downgrade anytime</p>
+      )}
       <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginBottom: '4px' }}>
         <span style={{ fontFamily: "'Sora', system-ui, sans-serif", fontSize: '64px', fontWeight: 900, color: '#0d0d1a', lineHeight: 1, letterSpacing: '-0.04em' }}>{price}</span>
         <span style={{ fontSize: '14px', color: '#9ca3af' }}>/mo + VAT</span>
@@ -1051,8 +1052,8 @@ function Pricing({ onTrialClick }: { onTrialClick: (plan?: Plan) => void }) {
             <span style={{ color: '#0d0d1a' }}>Start free. </span>
             <span style={{ color: '#6366f1' }}>Grow fast.</span>
           </h2>
-          <p style={{ fontSize: '18px', color: '#666', maxWidth: '500px', margin: '0 auto', lineHeight: 1.65 }}>
-            One month free on every plan. No credit card required.
+          <p style={{ fontSize: '18px', color: '#666', maxWidth: '560px', margin: '0 auto', lineHeight: 1.65 }}>
+            Start with a free month on Enterprise — the full experience, no credit card required.
           </p>
         </div>
 
@@ -1079,6 +1080,9 @@ function Pricing({ onTrialClick }: { onTrialClick: (plan?: Plan) => void }) {
             }}>{badge}</span>
           ))}
         </div>
+        <p style={{ textAlign: 'center', fontSize: '13px', color: '#9ca3af', margin: '24px auto 0', maxWidth: '520px', lineHeight: 1.6 }}>
+          After your trial, keep Enterprise or downgrade to the plan that fits. We'll show you exactly what changes before you decide.
+        </p>
       </div>
     </section>
   )
@@ -1389,7 +1393,7 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
             {step < 3 && (
               <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', margin: '4px 0 0' }}>
                 {step === 1 && '1 month free trial · No credit card required'}
-                {step === 2 && 'All plans include a 1-month free trial'}
+                {step === 2 && 'Enterprise includes a 1-month free trial — start with everything'}
               </p>
             )}
           </div>
@@ -1493,7 +1497,9 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
                         <span style={{ fontSize: '12px', fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                           {PLAN_LABELS[plan]}
                         </span>
-                        <span style={{ fontSize: '10px', fontWeight: 700, padding: '2px 8px', background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '999px', color: '#818cf8' }}>1 month free</span>
+                        {plan === 'enterprise' && (
+                          <span style={{ fontSize: '10px', fontWeight: 700, padding: '2px 8px', background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', borderRadius: '999px', color: '#4ade80' }}>1 month free</span>
+                        )}
                       </div>
                       <p style={{ fontFamily: "'Sora', system-ui, sans-serif", fontSize: '36px', fontWeight: 800, color: '#f5f5f7', margin: '0 0 2px', lineHeight: 1, letterSpacing: '-0.03em' }}>{price}</p>
                       <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)', margin: '0 0 20px' }}>+ VAT · then monthly</p>
@@ -1531,10 +1537,12 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
                 margin: '0 auto 24px', fontSize: '28px',
               }}>🎉</div>
               <h3 style={{ fontSize: '22px', fontWeight: 700, color: '#f5f5f7', margin: '0 0 10px', fontFamily: "'Sora', system-ui, sans-serif" }}>
-                Your trial has started!
+                {form.plan === 'enterprise' ? 'Your trial has started!' : "You're all set!"}
               </h3>
               <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.5)', margin: '0 0 32px', lineHeight: 1.6 }}>
-                Your 1-month free trial has started. We're setting up your account — you'll receive a confirmation email shortly.
+                {form.plan === 'enterprise'
+                  ? "Your 1-month free Enterprise trial has started. We're setting up your account — you'll receive a confirmation email shortly."
+                  : "Your account is being set up — you'll receive a confirmation email shortly."}
               </p>
               <div style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
