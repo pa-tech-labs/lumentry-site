@@ -1247,9 +1247,15 @@ function Footer() {
           <p style={{ fontSize: '13px', color: '#d1d5db', margin: 0 }}>
             © 2026 Lumentry. All rights reserved.
           </p>
-          <p style={{ fontSize: '13px', color: '#d1d5db', margin: 0 }}>
-            Built in London 🇬🇧
-          </p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <p style={{ fontSize: '13px', color: '#d1d5db', margin: 0 }}>Built in London 🇬🇧</p>
+            <a
+              href="https://book.studio-808.com/super-admin"
+              style={{ fontSize: '11px', color: '#d1d5db', textDecoration: 'none', opacity: 0.35 }}
+              onMouseEnter={e => (e.currentTarget.style.opacity = '0.7')}
+              onMouseLeave={e => (e.currentTarget.style.opacity = '0.35')}
+            >Staff login</a>
+          </div>
         </div>
       </div>
     </footer>

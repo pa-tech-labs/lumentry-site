@@ -41,14 +41,18 @@ export default function LoginPage() {
           .select('slug')
           .eq('id', profile.tenant_id)
           .single()
-        if (tenant?.slug) {
-          window.location.href = `https://${tenant.slug}.lumentry.io/admin`
+        if (tenant?.slug && data.session) {
+          // Pass session tokens in hash so access-hub's Supabase client picks them
+          // up via detectSessionInUrl — auth is scoped to the subdomain origin
+          const { access_token, refresh_token, expires_in } = data.session
+          const hash = `access_token=${access_token}&token_type=bearer&expires_in=${expires_in}&refresh_token=${refresh_token}&type=login`
+          window.location.href = `https://${tenant.slug}.lumentry.io/admin#${hash}`
           return
         }
       }
 
-      // Fallback: no slug found
-      window.location.href = '/admin'
+      // Fallback: no slug found — send to access-hub login on Studio 808 domain
+      window.location.href = 'https://book.studio-808.com/login'
     } catch {
       setError("Sign in succeeded but we couldn't load your profile — please refresh.")
       setLoading(false)
