@@ -5,7 +5,7 @@ import { IMG_GRID_1, IMG_GRID_2, IMG_GRID_3, IMG_GRID_4, IMG_GRID_5, IMG_ALT_1, 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
 type Plan = 'pro' | 'business' | 'enterprise'
-type ModalStep = 1 | 2 | 3
+type ModalStep = 1 | 2
 
 interface FormData {
   businessName: string
@@ -1294,7 +1294,7 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
   const set = (k: keyof FormData) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setForm(f => ({ ...f, [k]: e.target.value }))
 
-  const handleStep1Next = () => {
+  const handleSubmit = async () => {
     if (!form.businessName.trim() || !form.industry || !form.email.trim() || !form.password.trim()) {
       setError('Please fill in all fields.')
       return
@@ -1308,24 +1308,17 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
       return
     }
     setError(null)
-    setStep(2)
-  }
-
-  const handleSelectPlan = async (plan: Plan) => {
-    const finalForm = { ...form, plan }
-    setForm(finalForm)
     setLoading(true)
-    setError(null)
     try {
       const res = await fetch('https://access-hub-production.up.railway.app/api/auth/register-tenant', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          businessName: finalForm.businessName,
-          industry: finalForm.industry,
-          email: finalForm.email,
-          password: finalForm.password,
-          plan,
+          businessName: form.businessName,
+          industry: form.industry,
+          email: form.email,
+          password: form.password,
+          plan: 'enterprise',
         }),
       })
       const data = await res.json()
@@ -1334,17 +1327,11 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
         setLoading(false)
         return
       }
-      setStep(3)
+      setStep(2)
     } catch {
       setError('Network error. Please check your connection.')
     }
     setLoading(false)
-  }
-
-  const planDetails: Record<Plan, { price: string; features: string[] }> = {
-    pro:        { price: '£29/mo', features: PRO_FEATURES },
-    business:   { price: '£50/mo', features: BUSINESS_FEATURES },
-    enterprise: { price: '£79/mo', features: ENTERPRISE_FEATURES.slice(0, 5) },
   }
 
   return createPortal(
@@ -1366,7 +1353,6 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
         @media (max-width: 640px) {
           .tm-overlay { align-items: flex-end !important; padding: 0 !important; }
           .tm-modal   { border-radius: 20px 20px 0 0 !important; max-width: 100% !important; max-height: 92svh !important; max-height: 92vh !important; }
-          .tm-plan-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
       <div className="tm-modal" style={{
@@ -1374,9 +1360,8 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
         border: '1px solid rgba(255,255,255,0.1)',
         borderRadius: '20px',
         width: '100%',
-        maxWidth: step === 2 ? '940px' : '480px',
+        maxWidth: '480px',
         boxShadow: '0 32px 80px rgba(0,0,0,0.6)',
-        transition: 'max-width 0.3s ease',
       }}>
         {/* Header */}
         <div style={{
@@ -1387,7 +1372,7 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
           <div>
             {/* Step indicator */}
             <div style={{ display: 'flex', gap: '6px', marginBottom: '14px' }}>
-              {([1, 2, 3] as ModalStep[]).map(n => (
+              {([1, 2] as ModalStep[]).map(n => (
                 <div key={n} style={{
                   height: '3px', width: n <= step ? '28px' : '16px',
                   borderRadius: '999px',
@@ -1399,14 +1384,12 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
               ))}
             </div>
             <p style={{ fontSize: '20px', fontWeight: 700, color: '#f5f5f7', margin: 0, fontFamily: "'Sora', system-ui, sans-serif" }}>
-              {step === 1 && 'Tell us about your business'}
-              {step === 2 && 'Choose your plan'}
-              {step === 3 && "You're all set 🎉"}
+              {step === 1 && 'Start your free trial'}
+              {step === 2 && 'Your trial has started! 🎉'}
             </p>
-            {step < 3 && (
+            {step === 1 && (
               <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', margin: '4px 0 0' }}>
-                {step === 1 && '1 month free trial · No credit card required'}
-                {step === 2 && 'Enterprise includes a 1-month free trial — start with everything'}
+                1 month free · No credit card required
               </p>
             )}
           </div>
@@ -1471,77 +1454,26 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
                   onChange={set('password')}
                   onFocus={e => (e.target.style.borderColor = 'rgba(99,102,241,0.5)')}
                   onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.12)')}
-                  onKeyDown={e => e.key === 'Enter' && handleStep1Next()}
+                  onKeyDown={e => e.key === 'Enter' && handleSubmit()}
                 />
               </div>
               {error && <p style={{ fontSize: '13px', color: '#f87171', margin: 0, padding: '10px 14px', background: 'rgba(248,113,113,0.08)', borderRadius: '8px', border: '1px solid rgba(248,113,113,0.2)' }}>{error}</p>}
               <button
-                onClick={handleStep1Next}
+                onClick={handleSubmit}
+                disabled={loading}
                 className="grad-btn"
-                style={{ width: '100%', height: '48px', borderRadius: '12px', fontSize: '15px', marginTop: '4px' }}
+                style={{ width: '100%', height: '48px', borderRadius: '12px', fontSize: '15px', marginTop: '4px', opacity: loading ? 0.7 : 1, cursor: loading ? 'not-allowed' : 'pointer' }}
               >
-                Continue →
+                {loading ? 'Creating your account…' : 'Start free trial →'}
               </button>
+              <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)', textAlign: 'center', margin: '4px 0 0', lineHeight: 1.5 }}>
+                Your trial includes full Enterprise access. Downgrade to any plan at any time.
+              </p>
             </div>
           )}
 
-          {/* Step 2 */}
+          {/* Step 2 — success */}
           {step === 2 && (
-            <div>
-              <div className="tm-plan-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px' }}>
-                {(['pro', 'business', 'enterprise'] as Plan[]).map(plan => {
-                  const { price, features } = planDetails[plan]
-                  const isFeatured = plan === 'business'
-                  const PLAN_LABELS: Record<Plan, string> = { pro: 'Pro', business: 'Business', enterprise: 'Enterprise' }
-                  return (
-                    <div
-                      key={plan}
-                      style={{
-                        background: '#0d0d0d',
-                        border: `1px solid ${isFeatured ? 'rgba(99,102,241,0.35)' : 'rgba(255,255,255,0.08)'}`,
-                        borderRadius: '16px', padding: '28px',
-                        position: 'relative', overflow: 'hidden',
-                      }}
-                    >
-                      {isFeatured && (
-                        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: 'linear-gradient(90deg, #6366f1, #8b5cf6)' }} />
-                      )}
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-                        <span style={{ fontSize: '12px', fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                          {PLAN_LABELS[plan]}
-                        </span>
-                        {plan === 'enterprise' && (
-                          <span style={{ fontSize: '10px', fontWeight: 700, padding: '2px 8px', background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', borderRadius: '999px', color: '#4ade80' }}>1 month free</span>
-                        )}
-                      </div>
-                      <p style={{ fontFamily: "'Sora', system-ui, sans-serif", fontSize: '36px', fontWeight: 800, color: '#f5f5f7', margin: '0 0 2px', lineHeight: 1, letterSpacing: '-0.03em' }}>{price}</p>
-                      <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)', margin: '0 0 20px' }}>+ VAT · then monthly</p>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '24px' }}>
-                        {features.map(f => (
-                          <div key={f} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'rgba(255,255,255,0.65)' }}>
-                            <CheckIcon /> {f}
-                          </div>
-                        ))}
-                        <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.25)', margin: '4px 0 0' }}>and more…</p>
-                      </div>
-                      <button
-                        onClick={() => !loading && handleSelectPlan(plan)}
-                        disabled={loading}
-                        className={isFeatured ? 'grad-btn' : 'ghost-btn'}
-                        style={{ width: '100%', height: '44px', borderRadius: '10px', fontSize: '14px', fontWeight: 600, opacity: loading ? 0.6 : 1, cursor: loading ? 'not-allowed' : 'pointer' }}
-                      >
-                        {loading ? 'Creating your account…' : `Select ${PLAN_LABELS[plan]}`}
-                      </button>
-                    </div>
-                  )
-                })}
-              </div>
-              {error && <p style={{ fontSize: '13px', color: '#f87171', marginTop: '16px', padding: '10px 14px', background: 'rgba(248,113,113,0.08)', borderRadius: '8px', border: '1px solid rgba(248,113,113,0.2)' }}>{error}</p>}
-            </div>
-          )}
-
-          {/* Step 3 */}
-          {step === 3 && (
             <div style={{ textAlign: 'center', padding: '12px 0 8px' }}>
               <div style={{
                 width: '64px', height: '64px', borderRadius: '50%',
@@ -1549,13 +1481,8 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 margin: '0 auto 24px', fontSize: '28px',
               }}>🎉</div>
-              <h3 style={{ fontSize: '22px', fontWeight: 700, color: '#f5f5f7', margin: '0 0 10px', fontFamily: "'Sora', system-ui, sans-serif" }}>
-                {form.plan === 'enterprise' ? 'Your trial has started!' : "You're all set!"}
-              </h3>
               <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.5)', margin: '0 0 32px', lineHeight: 1.6 }}>
-                {form.plan === 'enterprise'
-                  ? "Your 1-month free Enterprise trial has started. We're setting up your account — you'll receive a confirmation email shortly."
-                  : "Your account is being set up — you'll receive a confirmation email shortly."}
+                Your 1-month free Enterprise trial has started. We're setting up your account — you'll receive a confirmation email shortly.
               </p>
               <div style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
