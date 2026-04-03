@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { IMG_GRID_1, IMG_GRID_2, IMG_GRID_3, IMG_GRID_4, IMG_GRID_5, IMG_ALT_1, IMG_ALT_2, IMG_ALT_3, IMG_ALT_4, IMG_STEP_1, IMG_STEP_2, IMG_STEP_3 } from './config/images'
+import LoginPage from './LoginPage'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -353,7 +354,7 @@ function Navbar({ onTrialClick }: { onTrialClick: () => void }) {
         {['Features', 'Pricing', 'Login'].map(link => (
           <a
             key={link}
-            href={link === 'Login' ? 'https://book.studio-808.com' : `#${link.toLowerCase()}`}
+            href={link === 'Login' ? '/login' : `#${link.toLowerCase()}`}
             target={link === 'Login' ? '_blank' : undefined}
             rel={link === 'Login' ? 'noreferrer' : undefined}
             style={{ fontSize: '14px', fontWeight: 500, color: '#6b7280', textDecoration: 'none', transition: 'color 0.2s' }}
@@ -1222,7 +1223,7 @@ function Footer() {
             <div>
               <p style={{ fontSize: '11px', fontWeight: 700, color: '#d1d5db', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '14px', marginTop: 0 }}>Product</p>
               {['Features', 'Pricing', 'Login'].map(l => (
-                <a key={l} href={l === 'Login' ? 'https://book.studio-808.com' : `#${l.toLowerCase()}`}
+                <a key={l} href={l === 'Login' ? '/login' : `#${l.toLowerCase()}`}
                   style={{ display: 'block', fontSize: '14px', color: '#6b7280', textDecoration: 'none', marginBottom: '10px', transition: 'color 0.2s' }}
                   onMouseEnter={e => (e.currentTarget.style.color = '#1a1a2e')}
                   onMouseLeave={e => (e.currentTarget.style.color = '#6b7280')}
@@ -1508,6 +1509,8 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
 // ── App ───────────────────────────────────────────────────────────────────────
 
 export default function App() {
+  if (window.location.pathname === '/login') return <LoginPage />
+
   const [modalOpen, setModalOpen] = useState(false)
   const [modalPlan, setModalPlan] = useState<Plan | null>(null)
 
