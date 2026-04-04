@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { IMG_GRID_1, IMG_GRID_2, IMG_GRID_3, IMG_GRID_4, IMG_GRID_5, IMG_ALT_1, IMG_ALT_2, IMG_ALT_3, IMG_ALT_4, IMG_STEP_1, IMG_STEP_2, IMG_STEP_3 } from './config/images'
 import LoginPage from './LoginPage'
+import PrivacyPolicy from './PrivacyPolicy'
+import Terms from './Terms'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -1245,12 +1247,16 @@ function Footer() {
             </div>
             <div>
               <p style={{ fontSize: '11px', fontWeight: 700, color: '#d1d5db', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '14px', marginTop: 0 }}>Legal</p>
-              {['Privacy Policy', 'Terms of Service', 'Contact'].map(l => (
-                <a key={l} href="#"
+              {[
+                { label: 'Privacy Policy', href: '/privacy-policy' },
+                { label: 'Terms of Service', href: '/terms' },
+                { label: 'Contact', href: 'mailto:legal@lumentry.io' },
+              ].map(({ label, href }) => (
+                <a key={label} href={href}
                   style={{ display: 'block', fontSize: '14px', color: '#6b7280', textDecoration: 'none', marginBottom: '10px', transition: 'color 0.2s' }}
                   onMouseEnter={e => (e.currentTarget.style.color = '#1a1a2e')}
                   onMouseLeave={e => (e.currentTarget.style.color = '#6b7280')}
-                >{l}</a>
+                >{label}</a>
               ))}
             </div>
           </div>
@@ -1263,7 +1269,7 @@ function Footer() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <p style={{ fontSize: '13px', color: '#d1d5db', margin: 0 }}>Built in London 🇬🇧</p>
             <a
-              href="https://book.studio-808.com/super-admin"
+              href="https://book.studio-808.com/login"
               style={{ fontSize: '11px', color: '#d1d5db', textDecoration: 'none', opacity: 0.35 }}
               onMouseEnter={e => (e.currentTarget.style.opacity = '0.7')}
               onMouseLeave={e => (e.currentTarget.style.opacity = '0.35')}
@@ -1529,6 +1535,8 @@ function TrialModal({ open, onClose, initialPlan }: { open: boolean; onClose: ()
 
 export default function App() {
   if (window.location.pathname === '/login') return <LoginPage />
+  if (window.location.pathname === '/privacy-policy') return <PrivacyPolicy />
+  if (window.location.pathname === '/terms') return <Terms />
 
   const [modalOpen, setModalOpen] = useState(false)
   const [modalPlan, setModalPlan] = useState<Plan | null>(null)
