@@ -14,6 +14,20 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [mode, setMode] = useState<'login' | 'forgot' | 'sent'>('login')
+  const [resetEmail, setResetEmail] = useState('')
+  const [resetLoading, setResetLoading] = useState(false)
+
+  async function handleForgot(e: React.FormEvent) {
+    e.preventDefault()
+    setError(null)
+    setResetLoading(true)
+    await supabase.auth.resetPasswordForEmail(resetEmail, {
+      redirectTo: 'https://book.studio-808.com/reset-password',
+    })
+    setResetLoading(false)
+    setMode('sent')
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -159,53 +173,55 @@ export default function LoginPage() {
             border: '1px solid rgba(255,255,255,0.08)',
             padding: '32px',
           }}>
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '7px' }}>
-                <label style={{ fontSize: '13px', fontWeight: 600, color: 'rgba(255,255,255,0.7)' }}>
-                  Email
-                </label>
-                <input
-                  className="lp-input"
-                  type="email"
-                  placeholder="you@example.com"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  required
-                  disabled={loading}
-                  autoComplete="email"
-                />
+            {mode === 'sent' ? (
+              <div style={{ textAlign: 'center', padding: '8px 0' }}>
+                <p style={{ fontSize: '15px', fontWeight: 600, color: '#4ade80', margin: '0 0 8px' }}>Check your email for a reset link</p>
+                <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)', margin: '0 0 24px' }}>We sent a password reset link to <strong style={{ color: 'rgba(255,255,255,0.7)' }}>{resetEmail}</strong>.</p>
+                <button type="button" className="lp-btn" onClick={() => { setMode('login'); setError(null) }}>Back to sign in</button>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '7px' }}>
-                <label style={{ fontSize: '13px', fontWeight: 600, color: 'rgba(255,255,255,0.7)' }}>
-                  Password
-                </label>
-                <input
-                  className="lp-input"
-                  type="password"
-                  placeholder="Your password"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  required
-                  disabled={loading}
-                  autoComplete="current-password"
-                />
-              </div>
-
-              {error && (
-                <div style={{
-                  background: 'rgba(220,38,38,0.1)',
-                  border: '1px solid rgba(220,38,38,0.25)',
-                  borderRadius: '8px',
-                  padding: '10px 14px',
-                }}>
-                  <p style={{ fontSize: '13px', color: '#f87171', margin: 0 }}>{error}</p>
+            ) : mode === 'forgot' ? (
+              <form onSubmit={handleForgot} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '7px' }}>
+                  <label style={{ fontSize: '13px', fontWeight: 600, color: 'rgba(255,255,255,0.7)' }}>Email address</label>
+                  <input className="lp-input" type="email" placeholder="you@example.com" value={resetEmail} onChange={e => setResetEmail(e.target.value)} required disabled={resetLoading} autoFocus />
                 </div>
-              )}
-
-              <button type="submit" className="lp-btn" disabled={loading} style={{ marginTop: '4px' }}>
-                {loading ? 'Signing in…' : 'Sign in'}
-              </button>
-            </form>
+                {error && (
+                  <div style={{ background: 'rgba(220,38,38,0.1)', border: '1px solid rgba(220,38,38,0.25)', borderRadius: '8px', padding: '10px 14px' }}>
+                    <p style={{ fontSize: '13px', color: '#f87171', margin: 0 }}>{error}</p>
+                  </div>
+                )}
+                <button type="submit" className="lp-btn" disabled={resetLoading} style={{ marginTop: '4px' }}>
+                  {resetLoading ? 'Sending…' : 'Send reset link'}
+                </button>
+                <button type="button" onClick={() => { setMode('login'); setError(null) }} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '13px', color: 'rgba(255,255,255,0.4)', padding: 0, fontFamily: 'inherit' }}>
+                  ← Back to sign in
+                </button>
+              </form>
+            ) : (
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '7px' }}>
+                  <label style={{ fontSize: '13px', fontWeight: 600, color: 'rgba(255,255,255,0.7)' }}>Email</label>
+                  <input className="lp-input" type="email" placeholder="you@example.com" value={email} onChange={e => setEmail(e.target.value)} required disabled={loading} autoComplete="email" />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '7px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <label style={{ fontSize: '13px', fontWeight: 600, color: 'rgba(255,255,255,0.7)' }}>Password</label>
+                    <button type="button" onClick={() => { setResetEmail(email); setMode('forgot'); setError(null) }} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '12px', color: 'rgba(255,255,255,0.4)', padding: 0, fontFamily: 'inherit', textDecoration: 'underline' }}>
+                      Forgot password?
+                    </button>
+                  </div>
+                  <input className="lp-input" type="password" placeholder="Your password" value={password} onChange={e => setPassword(e.target.value)} required disabled={loading} autoComplete="current-password" />
+                </div>
+                {error && (
+                  <div style={{ background: 'rgba(220,38,38,0.1)', border: '1px solid rgba(220,38,38,0.25)', borderRadius: '8px', padding: '10px 14px' }}>
+                    <p style={{ fontSize: '13px', color: '#f87171', margin: 0 }}>{error}</p>
+                  </div>
+                )}
+                <button type="submit" className="lp-btn" disabled={loading} style={{ marginTop: '4px' }}>
+                  {loading ? 'Signing in…' : 'Sign in'}
+                </button>
+              </form>
+            )}
           </div>
 
           <p style={{ marginTop: '20px', textAlign: 'center', fontSize: '14px', color: 'rgba(255,255,255,0.3)' }}>

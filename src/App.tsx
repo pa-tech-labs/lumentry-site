@@ -351,12 +351,10 @@ function Navbar({ onTrialClick }: { onTrialClick: () => void }) {
 
       {/* Links */}
       <div className="hidden md:flex" style={{ alignItems: 'center', gap: '32px' }}>
-        {['Features', 'Pricing', 'Login'].map(link => (
+        {['Features', 'Pricing'].map(link => (
           <a
             key={link}
-            href={link === 'Login' ? '/login' : `#${link.toLowerCase()}`}
-            target={link === 'Login' ? '_blank' : undefined}
-            rel={link === 'Login' ? 'noreferrer' : undefined}
+            href={`#${link.toLowerCase()}`}
             style={{ fontSize: '14px', fontWeight: 500, color: '#6b7280', textDecoration: 'none', transition: 'color 0.2s' }}
             onMouseEnter={e => (e.currentTarget.style.color = '#1a1a2e')}
             onMouseLeave={e => (e.currentTarget.style.color = '#6b7280')}
@@ -364,6 +362,21 @@ function Navbar({ onTrialClick }: { onTrialClick: () => void }) {
             {link}
           </a>
         ))}
+        <a
+          href="/login"
+          style={{
+            height: '38px', padding: '0 18px', borderRadius: '10px',
+            background: 'transparent', color: '#1a1a2e',
+            fontSize: '14px', fontWeight: 600, border: '1.5px solid #1a1a2e',
+            cursor: 'pointer', textDecoration: 'none', display: 'inline-flex',
+            alignItems: 'center', transition: 'background 0.2s, color 0.2s',
+            fontFamily: "'DM Sans', sans-serif",
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = '#1a1a2e'; e.currentTarget.style.color = '#fff' }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#1a1a2e' }}
+        >
+          Log in
+        </a>
         <button
           onClick={onTrialClick}
           style={{
