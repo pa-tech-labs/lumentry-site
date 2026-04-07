@@ -1,7 +1,14 @@
 import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
-const lumentryWordmark = '/lumentry-wordmark-light.svg'
-const lumentryIcon = '/lumentry-icon-light.svg'
+// lumentryWordmark — placeholder until real outlined-path SVG is exported
+// const lumentryWordmark = '/lumentry-wordmark-light.svg'
+const lumentryIcon = '/lumentry-icon-dark.svg'
+const WORDMARK_STYLE: React.CSSProperties = {
+  fontFamily: "'Sora', system-ui, sans-serif",
+  fontSize: '18px', fontWeight: 700,
+  letterSpacing: '-0.03em', color: '#1a1a2e',
+  lineHeight: 1,
+}
 import { IMG_GRID_1, IMG_GRID_2, IMG_GRID_3, IMG_GRID_4, IMG_GRID_5, IMG_ALT_1, IMG_ALT_2, IMG_ALT_3, IMG_ALT_4, IMG_STEP_1, IMG_STEP_2, IMG_STEP_3 } from './config/images'
 import LoginPage from './LoginPage'
 import PrivacyPolicy from './PrivacyPolicy'
@@ -331,11 +338,9 @@ function Navbar({ onTrialClick }: { onTrialClick: () => void }) {
       transition: 'background 0.3s, border-color 0.3s',
     }}>
       {/* Logo */}
-      <a href="#" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-        {/* Wordmark — desktop */}
-        <img src={lumentryWordmark} alt="Lumentry" height="28" width="131" className="hidden md:block" />
-        {/* Icon — mobile */}
-        <img src={lumentryIcon} alt="Lumentry" width="28" height="28" className="md:hidden" />
+      <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
+        <img src={lumentryIcon} alt="" width="28" height="28" style={{ display: 'block', borderRadius: '7px' }} />
+        <span style={WORDMARK_STYLE} className="hidden md:inline">lumentry</span>
       </a>
 
       {/* Links */}
@@ -1207,8 +1212,9 @@ function Footer() {
         }}>
           {/* Left */}
           <div>
-            <a href="#" style={{ display: 'inline-block', textDecoration: 'none', marginBottom: '12px' }}>
-              <img src={lumentryWordmark} alt="Lumentry" height="28" style={{ display: 'block' }} />
+            <a href="#" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', textDecoration: 'none', marginBottom: '12px' }}>
+              <img src={lumentryIcon} alt="" width="28" height="28" style={{ display: 'block', borderRadius: '7px' }} />
+              <span style={{ ...WORDMARK_STYLE, fontSize: '17px' }}>lumentry</span>
             </a>
             <p style={{ fontSize: '13px', color: '#9ca3af', maxWidth: '220px', lineHeight: 1.6, margin: 0 }}>
               Smart booking and venue management for modern businesses.
