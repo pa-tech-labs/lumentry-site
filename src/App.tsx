@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
+import lumentryWordmark from './assets/lumentry-wordmark-light.svg'
+import lumentryIcon from './assets/lumentry-icon-light.svg'
 import { IMG_GRID_1, IMG_GRID_2, IMG_GRID_3, IMG_GRID_4, IMG_GRID_5, IMG_ALT_1, IMG_ALT_2, IMG_ALT_3, IMG_ALT_4, IMG_STEP_1, IMG_STEP_2, IMG_STEP_3 } from './config/images'
 import LoginPage from './LoginPage'
 import PrivacyPolicy from './PrivacyPolicy'
@@ -153,17 +155,6 @@ const ENTERPRISE_FEATURES = [
 
 // ── Tiny Components ───────────────────────────────────────────────────────────
 
-function HexLogo({ size = 28, dark = false }: { size?: number; dark?: boolean }) {
-  const fill = dark ? '#1a1a2e' : 'white'
-  const stroke = dark ? '#1a1a2e' : 'rgba(255,255,255,0.15)'
-  return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none">
-      <path d="M16 2l12 7v14l-12 7L4 23V9z" fill={dark ? 'white' : '#1a1a2e'} stroke={stroke} strokeWidth="1" />
-      <circle cx="16" cy="13" r="3.5" fill={fill} />
-      <path d="M14 16.5l-.5 5.5h5l-.5-5.5" fill={fill} />
-    </svg>
-  )
-}
 
 function CheckIcon({ light = false }: { light?: boolean }) {
   const bg = light ? 'rgba(99,102,241,0.10)' : 'rgba(99,102,241,0.12)'
@@ -340,15 +331,9 @@ function Navbar({ onTrialClick }: { onTrialClick: () => void }) {
       transition: 'background 0.3s, border-color 0.3s',
     }}>
       {/* Logo */}
-      <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
-        <HexLogo size={28} />
-        <span style={{
-          fontFamily: "'Sora', system-ui, sans-serif",
-          fontSize: '18px', fontWeight: 700,
-          letterSpacing: '-0.02em', color: '#1a1a2e',
-        }}>
-          Lumentry
-        </span>
+      <a href="#" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+        <img src={lumentryWordmark} alt="Lumentry" height="30" className="hidden md:block" style={{ display: 'block' }} />
+        <img src={lumentryIcon} alt="Lumentry" width="32" height="32" className="md:hidden" />
       </a>
 
       {/* Links */}
@@ -1220,13 +1205,8 @@ function Footer() {
         }}>
           {/* Left */}
           <div>
-            <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', marginBottom: '12px' }}>
-              <HexLogo size={24} />
-              <span style={{
-                fontFamily: "'Sora', system-ui, sans-serif",
-                fontSize: '17px', fontWeight: 700,
-                letterSpacing: '-0.02em', color: '#1a1a2e',
-              }}>Lumentry</span>
+            <a href="#" style={{ display: 'inline-block', textDecoration: 'none', marginBottom: '12px' }}>
+              <img src={lumentryWordmark} alt="Lumentry" height="28" style={{ display: 'block' }} />
             </a>
             <p style={{ fontSize: '13px', color: '#9ca3af', maxWidth: '220px', lineHeight: 1.6, margin: 0 }}>
               Smart booking and venue management for modern businesses.

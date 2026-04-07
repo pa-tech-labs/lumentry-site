@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 60">
+  <!-- Icon -->
+  <rect width="60" height="60" rx="13" fill="#e8355a"/>
+  <path d="M20.4 13.2 L20.4 43.2 L40.8 43.2" fill="none" stroke="#0D0E12" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Wordmark -->
+  <text x="78" y="42" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="28" font-weight="600" letter-spacing="-0.5" fill="#F7F8F8">lumentry</text>
+</svg>
