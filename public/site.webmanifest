@@ -1,0 +1,15 @@
+{
+  "name": "Lumentry",
+  "short_name": "Lumentry",
+  "icons": [
+    {
+      "src": "/lumentry-icon-light.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}
