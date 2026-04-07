@@ -332,8 +332,10 @@ function Navbar({ onTrialClick }: { onTrialClick: () => void }) {
     }}>
       {/* Logo */}
       <a href="#" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-        <img src={lumentryWordmark} alt="Lumentry" height="30" className="hidden md:block" style={{ display: 'block' }} />
-        <img src={lumentryIcon} alt="Lumentry" width="32" height="32" className="md:hidden" />
+        {/* Wordmark — desktop */}
+        <img src={lumentryWordmark} alt="Lumentry" height="28" width="131" className="hidden md:block" />
+        {/* Icon — mobile */}
+        <img src={lumentryIcon} alt="Lumentry" width="28" height="28" className="md:hidden" />
       </a>
 
       {/* Links */}
