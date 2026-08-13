@@ -117,8 +117,18 @@ const STEPS = [
   },
 ]
 
+// These strings are submitted as `industry` to POST /api/auth/register-tenant.
+// The server matches them case-insensitively against public.verticals.name to
+// set tenants.industry_vertical, which is what drives every piece of
+// vertical-specific copy (session noun, booking URL, SMS sender id). A label
+// that matches a vertical name therefore does real work; the rest fall back to
+// the default vertical, which is the long-standing behaviour.
+//
+// So 'Podcast Studio' must stay spelled exactly as public.verticals.name has it
+// (added in access-hub migration 20260813150000_podcast_studio_vertical.sql).
 const INDUSTRIES = [
   'Recording Studio',
+  'Podcast Studio',
   'Barber Shop',
   'Hair Salon',
   'Gym & Fitness',
